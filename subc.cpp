@@ -6,10 +6,10 @@ void Tiny() {
 
 }
 
-int main() {
+int main(int argc, char **argv) {
     ifstream fin;
     
-    fin.open("testfile.txt", ios::in);
+    fin.open(argv[argc-1], ios::in);
     if (fin.fail()) {
         cout << "Error opening the file." << endl;
         fin.close();

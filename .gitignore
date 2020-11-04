@@ -4,3 +4,12 @@
 subc
 ~$oject_Grammar.docx
 testfile.txt
+main.dSYM/Contents/Info.plist
+main.dSYM/Contents/Resources/DWARF/main
+parser.dSYM/Contents/Info.plist
+parser.dSYM/Contents/Resources/DWARF/parser
+subc.dSYM/Contents/Info.plist
+parser.o
+parser
+main
+main.cpp

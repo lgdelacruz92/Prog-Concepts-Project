@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include <stack>
+#include <set>
+
 using namespace std;
 static const int COMMENT = 1;
 static const int IDENTIFIER = 2;
@@ -20,5 +22,5 @@ class Parser {
         ifstream* fin;
         char my_c;
         int numberLines;
-        static const int T_COMMENT = 0;
+        set<string> predefined_tokens;
 };

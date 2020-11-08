@@ -4,6 +4,60 @@
 Parser::Parser() {
     fin = new ifstream();
     numberLines = 0;
+    predefined_tokens.insert("\n");
+    predefined_tokens.insert("program");
+    predefined_tokens.insert("var");
+    predefined_tokens.insert("const");
+    predefined_tokens.insert("type");
+    predefined_tokens.insert("function");
+    predefined_tokens.insert("return");
+    predefined_tokens.insert("begin");
+    predefined_tokens.insert("end");
+    predefined_tokens.insert(":=:");
+    predefined_tokens.insert(":=");
+    predefined_tokens.insert("output");
+    predefined_tokens.insert("if");
+    predefined_tokens.insert("then");
+    predefined_tokens.insert("else");
+    predefined_tokens.insert("while");
+    predefined_tokens.insert("do");
+    predefined_tokens.insert("case");
+    predefined_tokens.insert("of");
+    predefined_tokens.insert("..");
+    predefined_tokens.insert("otherwise");
+    predefined_tokens.insert("repeat");
+    predefined_tokens.insert("for");
+    predefined_tokens.insert("until");
+    predefined_tokens.insert("loop");
+    predefined_tokens.insert("pool");
+    predefined_tokens.insert("exit");
+    predefined_tokens.insert("<=");
+    predefined_tokens.insert("<>");
+    predefined_tokens.insert("<");
+    predefined_tokens.insert(">=");
+    predefined_tokens.insert(">");
+    predefined_tokens.insert("=");
+    predefined_tokens.insert("mod");
+    predefined_tokens.insert("and");
+    predefined_tokens.insert("or");
+    predefined_tokens.insert("not");
+    predefined_tokens.insert("read");
+    predefined_tokens.insert("succ");
+    predefined_tokens.insert("pred");
+    predefined_tokens.insert("chr");
+    predefined_tokens.insert("ord");
+    predefined_tokens.insert("eof");
+    predefined_tokens.insert("{");
+    predefined_tokens.insert(":");
+    predefined_tokens.insert(";");
+    predefined_tokens.insert(".");
+    predefined_tokens.insert(",");
+    predefined_tokens.insert("(");
+    predefined_tokens.insert(")");
+    predefined_tokens.insert("+");
+    predefined_tokens.insert("-");
+    predefined_tokens.insert("*");
+    predefined_tokens.insert("/");
 }
 
 int Parser::_ReadComment(string& comment) {
@@ -60,7 +114,15 @@ void Parser::ReadFile(string _codeFile) {
         string token;
         int type = _ReadToken(token);
         if (token != "") {
-            cout << token << endl;
+            if (type == IDENTIFIER) {
+                if (predefined_tokens.find(token) != predefined_tokens.end()) {
+                    cout << token << " ********* This a token *******" << endl;
+                } else {
+                    cout << token << endl;
+                }
+            } else {
+                cout << token << endl;
+            }
         }
     }
     fin->close();

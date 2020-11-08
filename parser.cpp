@@ -3,103 +3,69 @@
 
 Parser::Parser() {
     fin = new ifstream();
-    numberLines = 0;
-    predefined_tokens.insert("\n");
-    predefined_tokens.insert("program");
-    predefined_tokens.insert("var");
-    predefined_tokens.insert("const");
-    predefined_tokens.insert("type");
-    predefined_tokens.insert("function");
-    predefined_tokens.insert("return");
-    predefined_tokens.insert("begin");
-    predefined_tokens.insert("end");
-    predefined_tokens.insert(":=:");
-    predefined_tokens.insert(":=");
-    predefined_tokens.insert("output");
-    predefined_tokens.insert("if");
-    predefined_tokens.insert("then");
-    predefined_tokens.insert("else");
-    predefined_tokens.insert("while");
-    predefined_tokens.insert("do");
-    predefined_tokens.insert("case");
-    predefined_tokens.insert("of");
-    predefined_tokens.insert("..");
-    predefined_tokens.insert("otherwise");
-    predefined_tokens.insert("repeat");
-    predefined_tokens.insert("for");
-    predefined_tokens.insert("until");
-    predefined_tokens.insert("loop");
-    predefined_tokens.insert("pool");
-    predefined_tokens.insert("exit");
-    predefined_tokens.insert("<=");
-    predefined_tokens.insert("<>");
-    predefined_tokens.insert("<");
-    predefined_tokens.insert(">=");
-    predefined_tokens.insert(">");
-    predefined_tokens.insert("=");
-    predefined_tokens.insert("mod");
-    predefined_tokens.insert("and");
-    predefined_tokens.insert("or");
-    predefined_tokens.insert("not");
-    predefined_tokens.insert("read");
-    predefined_tokens.insert("succ");
-    predefined_tokens.insert("pred");
-    predefined_tokens.insert("chr");
-    predefined_tokens.insert("ord");
-    predefined_tokens.insert("eof");
-    predefined_tokens.insert("{");
-    predefined_tokens.insert(":");
-    predefined_tokens.insert(";");
-    predefined_tokens.insert(".");
-    predefined_tokens.insert(",");
-    predefined_tokens.insert("(");
-    predefined_tokens.insert(")");
-    predefined_tokens.insert("+");
-    predefined_tokens.insert("-");
-    predefined_tokens.insert("*");
-    predefined_tokens.insert("/");
+    line = 0;
 }
 
-int Parser::_ReadComment(string& comment) {
-    int openBraceCount = 0;
+void Parser::_ReadComment() {
+    int openBrackets = 0;
     do {
-        if (my_c == '{') {
-            openBraceCount++;
-        } else if (my_c == '}') {
-            openBraceCount--;
+        if (my_c == '\n') {
+            line++;
         }
-        comment += my_c;
         fin->get(my_c);
-    } while (openBraceCount > 0);
-    return COMMENT;
+        if (my_c == '{') {
+            openBrackets++;
+        } else if (my_c == '}') {
+            openBrackets--;
+        }
+    } while (openBrackets > 0);
 }
 
-int Parser::_ReadIdentifier(string& identifier) {
-    do {
-        identifier += my_c;
-        fin->get(my_c);
-    } while (isIdentifierCharacter(my_c));
-    return IDENTIFIER;
-}
-
-int Parser::_ReadInteger(string& integer) {
-    do {
-        integer += my_c;
-        fin->get(my_c);
-    } while (isDigit(my_c));
-    return INTEGER;
-}
-
-int Parser::_ReadToken(string& token) {
-    fin->get(my_c);
-    if (my_c == '{') {
-        return _ReadComment(token);
-    } else if (isIdentifierStart(my_c)) {
-        return _ReadIdentifier(token);
-    } else if (isDigit(my_c)) {
-        return _ReadInteger(token);
+void Parser::_ReadIdentifier() {
+    if (isIdentifierStart(my_c)) {
+        string identifier;
+        while(isIdentifierCharacter(my_c)) {
+            identifier += my_c;
+            fin->get(my_c);
+        }
+        cout << identifier << endl;
+    } else {
+        cout << "Invalid identifier at line " << line + 1 << endl;
+        throw "";
     }
-    return -1;
+}
+
+void Parser::_ReadWhitespace() {
+    do {
+        if (my_c == '\n') {
+            line++;
+        }
+        fin->get(my_c);
+    } while(my_c == ' ' || my_c == '\n' || my_c == '\t');
+}
+
+void Parser::_ReadToken(string token) {
+    string theToken;
+    for (int i = 0; i < token.size(); i++) {
+        theToken += my_c;
+        fin->get(my_c);
+    }
+    if (theToken != token) {
+        cout << "Invalid token: " << theToken << " at line " << line << endl;
+        throw "";
+    }
+}
+
+void Parser::_Name() {
+    _ReadIdentifier();
+}
+
+void Parser::_Tiny() {
+    _ReadComment();
+    _ReadWhitespace();
+    _ReadToken("program");
+    _ReadWhitespace();
+    _Name();
 }
 
 void Parser::ReadFile(string _codeFile) {
@@ -109,22 +75,7 @@ void Parser::ReadFile(string _codeFile) {
         fin->close();
         return;
     }
-
-    while (!fin->eof()) {
-        string token;
-        int type = _ReadToken(token);
-        if (token != "") {
-            if (type == IDENTIFIER) {
-                if (predefined_tokens.find(token) != predefined_tokens.end()) {
-                    cout << token << " ********* This a token *******" << endl;
-                } else {
-                    cout << token << endl;
-                }
-            } else {
-                cout << token << endl;
-            }
-        }
-    }
+    _Tiny();
     fin->close();
 }
 

@@ -5,9 +5,6 @@
 #include <set>
 
 using namespace std;
-static const int COMMENT = 1;
-static const int IDENTIFIER = 2;
-static const int INTEGER = 3;
 
 class Parser {
     public:
@@ -15,12 +12,13 @@ class Parser {
         ~Parser();
         void ReadFile(string codeFile);
     private:
-        int _ReadComment(string& comment);
-        int _ReadToken(string& token);
-        int _ReadIdentifier(string& identifier);
-        int _ReadInteger(string& integer);
+        void _Name();
+        void _ReadComment();
+        void _ReadIdentifier();
+        void _ReadWhitespace();
+        void _ReadToken(string token);
+        void _Tiny();
         ifstream* fin;
         char my_c;
-        int numberLines;
-        set<string> predefined_tokens;
+        int line;
 };

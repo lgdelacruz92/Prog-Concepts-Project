@@ -19,6 +19,7 @@ void Parser::_ReadComment() {
             openBrackets--;
         }
     } while (openBrackets > 0);
+    fin->get(my_c);
 }
 
 void Parser::_ReadIdentifier() {
@@ -39,6 +40,9 @@ void Parser::_ReadWhitespace() {
     do {
         if (my_c == '\n') {
             line++;
+        }
+        if (my_c != ' ' && my_c != '\n' && my_c != '\t') {
+            break;
         }
         fin->get(my_c);
     } while(my_c == ' ' || my_c == '\n' || my_c == '\t');
@@ -66,6 +70,9 @@ void Parser::_Tiny() {
     _ReadToken("program");
     _ReadWhitespace();
     _Name();
+    _ReadWhitespace();
+    _ReadToken(":");
+    _ReadWhitespace();
 }
 
 void Parser::ReadFile(string _codeFile) {

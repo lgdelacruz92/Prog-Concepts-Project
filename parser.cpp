@@ -23,6 +23,7 @@ void Parser::_ReadComment() {
 }
 
 void Parser::_ReadIdentifier() {
+    _ReadWhitespace();
     if (isIdentifierStart(my_c)) {
         string identifier;
         while(isIdentifierCharacter(my_c)) {
@@ -49,6 +50,7 @@ void Parser::_ReadWhitespace() {
 }
 
 void Parser::_ReadToken(string token) {
+    _ReadWhitespace();
     string theToken;
     for (int i = 0; i < token.size(); i++) {
         theToken += my_c;
@@ -64,15 +66,34 @@ void Parser::_Name() {
     _ReadIdentifier();
 }
 
+void Parser::_Const() {
+    _Name();
+    _ReadToken("=");
+}
+
+void Parser::_Consts() {
+    if (_IsToken("const")) {
+        _ReadToken("const");
+        _Const();
+    }
+}
+
+bool Parser::_IsToken(string token) {
+    _ReadWhitespace();
+    for (int i = 0; i < token.size(); i++) {
+        if (token[i] != my_c)
+            return false;
+        fin->get(my_c);
+    }
+    return true;
+}
+
 void Parser::_Tiny() {
     _ReadComment();
-    _ReadWhitespace();
     _ReadToken("program");
-    _ReadWhitespace();
     _Name();
-    _ReadWhitespace();
     _ReadToken(":");
-    _ReadWhitespace();
+    _Consts();
 }
 
 void Parser::ReadFile(string _codeFile) {

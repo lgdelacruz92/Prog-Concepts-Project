@@ -12,6 +12,9 @@ class Parser {
         ~Parser();
         void ReadFile(string codeFile);
     private:
+        void _Const();
+        void _Consts();
+        bool _IsToken(string token);
         void _Name();
         void _ReadComment();
         void _ReadIdentifier();

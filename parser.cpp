@@ -91,13 +91,7 @@ void Parser::_ReadIdentifier() {
             identifier += my_c;
             fin->get(my_c);
         }
-
-        // If the character is not alphanumeric and not whitespace
-        // throw and error
-        if (!isAlphabet(my_c) && !isDigit(my_c) && !isWhiteSpace(my_c)) {
-            cout << "Invalid identifier at line" << endl;
-            throw "";
-        }
+        
         cout << identifier << endl;
     } else {
         cout << "Invalid identifier at line " << line + 1 << endl;
@@ -136,7 +130,7 @@ void Parser::_ReadWhitespace() {
             line++;
         }
 
-        if (isWhiteSpace(my_c)) {
+        if (!isWhiteSpace(my_c)) {
             break;
         }
 
@@ -159,8 +153,25 @@ bool Parser::_IsToken(string token) {
     return true;
 }
 
-void Parser::_Types() {
+/**
+ * Grammar for Type
+ * @return void
+ */
+void Parser::_Type() {
 
+}
+
+/**
+ * Grammar for Types
+ * @return void
+ */
+void Parser::_Types() {
+    if (_IsToken("type")) {
+        _ReadToken("type");
+        _Type();
+        _ReadWhitespace();
+        while (isIdentifierStart(my_c));
+    }
 }
 
 /**

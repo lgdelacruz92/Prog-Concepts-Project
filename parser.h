@@ -21,6 +21,7 @@ class Parser {
         void _ReadWhitespace();
         void _ReadToken(string token);
         void _Tiny();
+        void _Type();
         void _Types();
         ifstream* fin;
         char my_c;

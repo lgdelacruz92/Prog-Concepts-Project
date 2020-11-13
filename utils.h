@@ -13,3 +13,7 @@ bool isIdentifierCharacter(char c) {
 bool isIdentifierStart(char c) {
     return isAlphabet(c) || c == '_';
 }
+
+bool isWhiteSpace(char c) {
+    return c == ' ' || c == '\n' || c == '\t';
+}

@@ -10,7 +10,7 @@
         "request": "launch",
         "program": "${fileDirname}/${fileBasenameNoExtension}",
         "args": [
-            "tiny_test_progs/tiny_01"
+            "tiny_test_progs/tiny_03"
         ],
         "stopAtEntry": true,
         "cwd": "${workspaceFolder}",

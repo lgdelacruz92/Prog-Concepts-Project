@@ -27,6 +27,26 @@ void Parser::_Consts() {
 }
 
 /**
+ * Grammar for LitList
+ * @return void
+ */
+void Parser::_LitList() {
+    _ReadToken("(");
+    _ReadWhitespace();
+    while (!_IsToken(")")) {
+        _Name();
+        _ReadWhitespace();
+        if (_IsToken(")")) {
+            break;
+        } else if (_IsToken(",")) {
+            _ReadToken(",");
+        }
+        _ReadWhitespace();
+    }
+    _ReadToken(")");
+}
+
+/**
  * Grammar for Name
  * @return void
  */
@@ -145,12 +165,20 @@ void Parser::_ReadWhitespace() {
  */
 bool Parser::_IsToken(string token) {
     _ReadWhitespace();
+    bool is_token = true;
+    int num_to_unget = 0;
     for (int i = 0; i < token.size(); i++) {
-        if (token[i] != my_c)
-            return false;
+        if (token[i] != my_c) {
+            is_token = false;
+            break;
+        }
+        num_to_unget = i;
         fin->get(my_c);
     }
-    return true;
+    for (int i = 0; i <= num_to_unget; i++) {
+        fin->unget();
+    }
+    return is_token;
 }
 
 /**
@@ -158,7 +186,9 @@ bool Parser::_IsToken(string token) {
  * @return void
  */
 void Parser::_Type() {
-
+    _Name();
+    _ReadToken("=");
+    _LitList();
 }
 
 /**

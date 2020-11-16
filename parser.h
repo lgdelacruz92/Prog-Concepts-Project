@@ -15,6 +15,7 @@ class Parser {
         void _Const();
         void _Consts();
         bool _IsToken(string token);
+        void _LitList();
         void _Name();
         void _ReadComment();
         void _ReadIdentifier();
@@ -27,3 +28,4 @@ class Parser {
         char my_c;
         int line;
 };
+        

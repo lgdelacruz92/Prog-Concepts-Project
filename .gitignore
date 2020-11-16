@@ -13,3 +13,7 @@ parser.o
 parser
 main
 main.cpp
+.vscode/launch
+.vscode/launch.dSYM/Contents/Info.plist
+.vscode/launch.dSYM/Contents/Resources/DWARF/launch
+tiny_test_progs/tiny_03.dSYM/Contents/Info.plist

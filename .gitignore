@@ -17,3 +17,5 @@ main.cpp
 .vscode/launch.dSYM/Contents/Info.plist
 .vscode/launch.dSYM/Contents/Resources/DWARF/launch
 tiny_test_progs/tiny_03.dSYM/Contents/Info.plist
+*.plist
+test.dSYM/Contents/Resources/DWARF/test

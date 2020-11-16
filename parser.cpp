@@ -164,20 +164,20 @@ void Parser::_ReadWhitespace() {
  * @return bool
  */
 bool Parser::_IsToken(string token) {
+    int original_pos = fin->tellg();
     _ReadWhitespace();
     bool is_token = true;
-    int num_to_unget = 0;
     for (int i = 0; i < token.size(); i++) {
         if (token[i] != my_c) {
             is_token = false;
             break;
         }
-        num_to_unget = i;
         fin->get(my_c);
     }
-    for (int i = 0; i <= num_to_unget; i++) {
-        fin->unget();
-    }
+    fin->seekg(original_pos-1);
+    fin->get(my_c);
+
+    
     return is_token;
 }
 

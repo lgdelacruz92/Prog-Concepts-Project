@@ -27,6 +27,17 @@ void Parser::_Consts() {
 }
 
 /**
+ * Grammar for Dclns
+ * @return void
+ */
+void Parser::_Dclns() {
+    if (_IsToken("var")) {
+        _ReadToken("var");
+        
+    }
+}
+
+/**
  * Grammar for LitList
  * @return void
  */
@@ -177,7 +188,7 @@ bool Parser::_IsToken(string token) {
     fin->seekg(original_pos-1);
     fin->get(my_c);
 
-    
+
     return is_token;
 }
 
@@ -215,6 +226,7 @@ void Parser::_Tiny() {
     _ReadToken(":");
     _Consts();
     _Types();
+    _Dclns();
 }
 
 Parser::~Parser() {

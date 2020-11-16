@@ -14,6 +14,7 @@ class Parser {
     private:
         void _Const();
         void _Consts();
+        void _Dclns();
         bool _IsToken(string token);
         void _LitList();
         void _Name();

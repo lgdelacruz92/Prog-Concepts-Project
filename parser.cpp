@@ -26,8 +26,27 @@ void Parser::_Consts() {
     }
 }
 
-void Parser::_Dclns() {
-    _Name();
+/**
+ * Grammar for Dcln
+ * @return void
+ */
+bool Parser::_Dcln() {
+    do {
+        if (_IsToken(",")) {
+            _ReadToken(",");
+        }
+        _Name();
+    } while (_IsToken(","));
+    int original_pos = fin->tellg();
+    if (_IsToken(":")) {
+        _ReadToken(":");
+        _ReadIdentifier();
+        return true;
+    } else {
+        fin->seekg(original_pos-1);
+        fin->get(my_c);
+        return false;
+    }
 }
 
 /**
@@ -37,11 +56,9 @@ void Parser::_Dclns() {
 void Parser::_Dclns() {
     if (_IsToken("var")) {
         _ReadToken("var");
-        do {
-            _Dclns();
+        while (_Dcln()) {
+            _ReadToken(";");
         }
-        while (_IsDcln());
-        _ReadToken(";");
     }
 }
 
@@ -91,6 +108,8 @@ void Parser::_ReadComment() {
             openBrackets++;
         } else if (my_c == '}') {
             openBrackets--;
+        } else if (isIdentifierCharacter(my_c)) {
+            return;
         }
     } while (openBrackets > 0);
 
@@ -151,7 +170,7 @@ void Parser::_ReadToken(string token) {
     for (int i = 0; i < token.size(); i++) {
         if (my_c != token[i]) {
             cout << "Invalid token: " << my_c << " at line " << line << endl;
-            throw "";
+            throw -1;
         }
         fin->get(my_c);
     }
@@ -175,15 +194,6 @@ void Parser::_ReadWhitespace() {
 
         fin->get(my_c);
     } while(isWhiteSpace(my_c));
-}
-
-/**
- * Method that checks if the next item is a Dcln grammar
- * @return bool
- */
-bool Parser::_IsDcln() {
-
-    return false;
 }
 
 /**
@@ -225,10 +235,12 @@ void Parser::_Type() {
  */
 void Parser::_Types() {
     if (_IsToken("type")) {
-        _ReadToken("type");
-        _Type();
-        _ReadWhitespace();
-        while (isIdentifierStart(my_c));
+        do {
+            _ReadToken("type");
+            _Type();
+            _ReadWhitespace();
+        } while (isIdentifierStart(my_c));
+        _ReadToken(";");
     }
 }
 

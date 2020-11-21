@@ -31,13 +31,13 @@ void Parser::_Consts() {
  * @return void
  */
 bool Parser::_Dcln() {
+    int original_pos = fin->tellg();
     do {
         if (_IsToken(",")) {
             _ReadToken(",");
         }
         _Name();
     } while (_IsToken(","));
-    int original_pos = fin->tellg();
     if (_IsToken(":")) {
         _ReadToken(":");
         _ReadIdentifier();
@@ -60,6 +60,24 @@ void Parser::_Dclns() {
             _ReadToken(";");
         }
     }
+}
+
+/**
+ * Grammar for Fcn
+ * @return void
+ */
+void Parser::_Fcn() {
+    _ReadToken("function");
+    _Name();
+    _ReadToken("(");
+    _Params();
+    _ReadToken(")");
+    _ReadToken(":");
+    _Name();
+    _ReadToken(";");
+    _Consts();
+    _Types();
+    _Dclns();
 }
 
 /**
@@ -111,6 +129,17 @@ void Parser::_LitList() {
  */
 void Parser::_Name() {
     _ReadIdentifier();
+}
+
+/**
+ * Grammar for Params
+ * @return void
+ */
+void Parser::_Params() {
+    while(!_IsToken(")")) {
+        _Dcln();
+    }
+    _ReadToken(";");
 }
 
 /**
@@ -219,6 +248,15 @@ void Parser::_ReadWhitespace() {
     } while(isWhiteSpace(my_c));
 }
 
+/**
+ * Grammar for SubProgs
+ * @return void
+ */
+void Parser::_SubProgs() {
+    while (_IsToken("function")) {
+        _Fcn();
+    }
+}
 
 /**
  * Grammar for Type
@@ -257,6 +295,7 @@ void Parser::_Tiny() {
     _Consts();
     _Types();
     _Dclns();
+    _SubProgs();
 }
 
 Parser::~Parser() {

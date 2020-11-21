@@ -63,6 +63,29 @@ void Parser::_Dclns() {
 }
 
 /**
+ * Method that checks if the following characters is
+ * a token
+ * @return bool
+ */
+bool Parser::_IsToken(string token) {
+    int original_pos = fin->tellg();
+    _ReadWhitespace();
+    bool is_token = true;
+    for (int i = 0; i < token.size(); i++) {
+        if (token[i] != my_c) {
+            is_token = false;
+            break;
+        }
+        fin->get(my_c);
+    }
+    fin->seekg(original_pos-1);
+    fin->get(my_c);
+
+
+    return is_token;
+}
+
+/**
  * Grammar for LitList
  * @return void
  */
@@ -196,28 +219,6 @@ void Parser::_ReadWhitespace() {
     } while(isWhiteSpace(my_c));
 }
 
-/**
- * Method that checks if the following characters is
- * a token
- * @return bool
- */
-bool Parser::_IsToken(string token) {
-    int original_pos = fin->tellg();
-    _ReadWhitespace();
-    bool is_token = true;
-    for (int i = 0; i < token.size(); i++) {
-        if (token[i] != my_c) {
-            is_token = false;
-            break;
-        }
-        fin->get(my_c);
-    }
-    fin->seekg(original_pos-1);
-    fin->get(my_c);
-
-
-    return is_token;
-}
 
 /**
  * Grammar for Type

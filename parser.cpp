@@ -108,7 +108,7 @@ void Parser::_ReadComment() {
             openBrackets++;
         } else if (my_c == '}') {
             openBrackets--;
-        } else if (isIdentifierCharacter(my_c)) {
+        } else if (isIdentifierCharacter(my_c) && openBrackets == 0) {
             return;
         }
     } while (openBrackets > 0);

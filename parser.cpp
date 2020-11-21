@@ -26,6 +26,10 @@ void Parser::_Consts() {
     }
 }
 
+void Parser::_Dclns() {
+    _Name();
+}
+
 /**
  * Grammar for Dclns
  * @return void
@@ -33,7 +37,11 @@ void Parser::_Consts() {
 void Parser::_Dclns() {
     if (_IsToken("var")) {
         _ReadToken("var");
-        
+        do {
+            _Dclns();
+        }
+        while (_IsDcln());
+        _ReadToken(";");
     }
 }
 
@@ -167,6 +175,15 @@ void Parser::_ReadWhitespace() {
 
         fin->get(my_c);
     } while(isWhiteSpace(my_c));
+}
+
+/**
+ * Method that checks if the next item is a Dcln grammar
+ * @return bool
+ */
+bool Parser::_IsDcln() {
+
+    return false;
 }
 
 /**

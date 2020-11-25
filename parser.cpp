@@ -78,6 +78,7 @@ void Parser::_Fcn() {
     _Consts();
     _Types();
     _Dclns();
+    
 }
 
 /**
@@ -138,8 +139,10 @@ void Parser::_Name() {
 void Parser::_Params() {
     while(!_IsToken(")")) {
         _Dcln();
+        if (_IsToken(";")) {
+            _ReadToken(";");
+        }
     }
-    _ReadToken(";");
 }
 
 /**

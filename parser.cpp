@@ -6,7 +6,7 @@ Parser::Parser() {
     line = 0;
 }
 
-Parser::Parser(ifstream* _fin) {
+Parser::Parser(istream* _fin) {
     fin = _fin;
     line = 0;
 }
@@ -199,14 +199,15 @@ void Parser::_ReadComment() {
  * @return void
  */
 void Parser::ReadFile(string _codeFile) {
-    fin->open(_codeFile, ios::in);
+    ifstream* l_fin = static_cast<ifstream*>(fin);
+    l_fin->open(_codeFile, ios::in);
     if (fin->fail()) {
         cout << "Error opening the file." << endl;
-        fin->close();
+        l_fin->close();
         return;
     }
     _Tiny();
-    fin->close();
+    l_fin->close();
 }
 
 /**

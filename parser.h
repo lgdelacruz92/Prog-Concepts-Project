@@ -9,7 +9,7 @@ using namespace std;
 class Parser {
     public:
         Parser();
-        Parser(ifstream* fin);
+        Parser(istream* _fin);
         ~Parser();
         void ReadFile(string codeFile);
     private:
@@ -32,7 +32,7 @@ class Parser {
         void _Tiny();
         void _Type();
         void _Types();
-        ifstream* fin;
+        istream* fin;
         char my_c;
         int line;
 };

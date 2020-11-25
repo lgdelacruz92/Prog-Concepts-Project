@@ -6,6 +6,19 @@ Parser::Parser() {
     line = 0;
 }
 
+Parser::Parser(ifstream* _fin) {
+    fin = _fin;
+    line = 0;
+}
+
+/**
+ * Grammar for Body
+ * @return void
+ */
+void Parser::_Body() {
+    _ReadToken("begin");
+}
+
 /**
  * Grammar for Const
  * @return void
@@ -78,7 +91,15 @@ void Parser::_Fcn() {
     _Consts();
     _Types();
     _Dclns();
-    
+    _Body();
+}
+
+/**
+ * Method that checks if next token is an identifier
+ * @return bool
+ */
+bool Parser::_IsIdentifier() {
+    return true;
 }
 
 /**

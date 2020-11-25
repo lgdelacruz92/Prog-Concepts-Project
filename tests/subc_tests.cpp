@@ -1,5 +1,5 @@
 #include <iostream>
-#include "parser.h"
+#include "../parser.h"
 using namespace std;
 
 void showError(string message) {

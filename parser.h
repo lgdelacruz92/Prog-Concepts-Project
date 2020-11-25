@@ -9,14 +9,17 @@ using namespace std;
 class Parser {
     public:
         Parser();
+        Parser(ifstream* fin);
         ~Parser();
         void ReadFile(string codeFile);
     private:
+        void _Body();
         void _Const();
         void _Consts();
         bool _Dcln();
         void _Dclns();
         void _Fcn();
+        bool _IsIdentifier();
         bool _IsToken(string token);
         void _LitList();
         void _Name();

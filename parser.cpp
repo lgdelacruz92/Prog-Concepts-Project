@@ -1,3 +1,4 @@
+#include <fstream>
 #include "parser.h"
 #include "utils.h"
 
@@ -99,6 +100,7 @@ void Parser::_Fcn() {
  * @return bool
  */
 bool Parser::_IsIdentifier() {
+    cout << "Here we go again" << endl;
     return true;
 }
 
@@ -324,5 +326,8 @@ void Parser::_Tiny() {
 }
 
 Parser::~Parser() {
-    delete fin;
+    if (fin != nullptr) {
+        cout << "Deallocating" << endl;
+        delete fin;
+    }
 }

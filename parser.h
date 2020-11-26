@@ -1,5 +1,5 @@
 #include <iostream>
-#include <fstream>
+#include <istream>
 #include <string>
 #include <stack>
 #include <set>
@@ -12,7 +12,6 @@ class Parser {
         Parser(istream* _fin);
         ~Parser();
         void ReadFile(string codeFile);
-    private:
         void _Body();
         void _Const();
         void _Consts();

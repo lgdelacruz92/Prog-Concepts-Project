@@ -21,3 +21,8 @@ tiny_test_progs/tiny_03.dSYM/Contents/Info.plist
 test.dSYM/Contents/Resources/DWARF/test
 subc_tests
 subc_tests
+tests/parser_tests.dSYM/Contents/Resources/DWARF/parser_tests
+tests/parser_tests
+.vscode/tasks.dSYM/Contents/Resources/DWARF/tasks
+.vscode/tasks
+parser_tests

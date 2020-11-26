@@ -100,7 +100,18 @@ void Parser::_Fcn() {
  * @return bool
  */
 bool Parser::_IsIdentifier() {
-    cout << "Here we go again" << endl;
+    int original_position = fin->tellg();
+    _ReadWhitespace();
+
+    if (isIdentifierStart(my_c)) {
+        while(!isWhiteSpace(my_c) && !(fin->eof())) {
+            if (!isIdentifierCharacter(my_c)) {
+                return false;
+            }
+            fin->get(my_c);
+        }
+    }
+
     return true;
 }
 

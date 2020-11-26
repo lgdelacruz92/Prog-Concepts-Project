@@ -110,9 +110,10 @@ bool Parser::_IsIdentifier() {
             }
             fin->get(my_c);
         }
+        return true;
+    } else {
+        return false;
     }
-
-    return true;
 }
 
 /**

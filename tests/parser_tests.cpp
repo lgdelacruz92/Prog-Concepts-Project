@@ -49,8 +49,19 @@ void test_IsIdentifier_2() {
     assertEqual(result, false, "Success a$b is NOT an identifier", "Error a$c should not be an identifier");
 }
 
+void test_IsIdentifier_3() {
+    string id = "2ab\000";
+    istringstream iss(id);
+    TestableParser p(&iss);
+    p.fin->seekg(0);
+    p.fin->get(p.my_c);
+    bool result = p._IsIdentifier();
+    assertEqual(result, false, "Success 2ab is NOT an identifier", "Error 2ab should not be an identifier");
+}
+
 int main() {
     test_IsIdentifier_1();
     test_IsIdentifier_2();
+    test_IsIdentifier_3();
     return 0;
 }

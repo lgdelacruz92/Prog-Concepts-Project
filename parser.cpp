@@ -196,23 +196,6 @@ void Parser::_ReadComment() {
 }
 
 /**
- * Method that reads the source file
- * Initiates the parsing
- * @return void
- */
-void Parser::ReadFile(string _codeFile) {
-    ifstream* l_fin = static_cast<ifstream*>(fin);
-    l_fin->open(_codeFile, ios::in);
-    if (fin->fail()) {
-        cout << "Error opening the file." << endl;
-        l_fin->close();
-        return;
-    }
-    _Tiny();
-    l_fin->close();
-}
-
-/**
  * Method that reads an identifier
  * @return void
  */
@@ -326,8 +309,4 @@ void Parser::_Tiny() {
 }
 
 Parser::~Parser() {
-    if (fin != nullptr) {
-        cout << "Deallocating" << endl;
-        delete fin;
-    }
 }

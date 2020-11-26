@@ -5,7 +5,7 @@ subc_tests: ./tests/subc_tests.cpp parser.o
 	g++ ./tests/subc_tests.cpp parser.o -o subc_tests
 
 parser_tests: ./tests/parser_tests.cpp parser.o
-	g++ ./tests/parser_tests.cpp parser.o -o parser_tests
+	g++ --std=c++11 ./tests/parser_tests.cpp parser.o -o parser_tests
 
 parser.o: parser.cpp
 	g++ -c parser.cpp -o parser.o

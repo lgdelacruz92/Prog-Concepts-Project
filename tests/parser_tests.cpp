@@ -6,6 +6,7 @@ using namespace std;
 class TestableParser : public Parser {
     public:
         TestableParser(istream* _fin);
+        virtual ~TestableParser() override;
 };
 
 TestableParser::TestableParser(istream* _fin) {
@@ -13,7 +14,9 @@ TestableParser::TestableParser(istream* _fin) {
     line = 0;
 }
 
-
+TestableParser::~TestableParser() {
+    cout << "Testtable parser" << endl;
+}
 
 void showError(string message) {
     cout << "\033[1;31m" << message << "\033[0m" << endl;

@@ -10,8 +10,7 @@ class Parser {
     public:
         Parser();
         Parser(istream* _fin);
-        ~Parser();
-        void ReadFile(string codeFile);
+        virtual ~Parser();
         void _Body();
         void _Const();
         void _Consts();

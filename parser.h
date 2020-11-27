@@ -11,6 +11,7 @@ class Parser {
         Parser();
         Parser(istream* _fin);
         virtual ~Parser();
+        void _Assignment();
         void _Body();
         void _Const();
         void _Consts();
@@ -26,6 +27,7 @@ class Parser {
         void _ReadIdentifier();
         void _ReadWhitespace();
         void _ReadToken(string token);
+        void _Statement();
         void _SubProgs();
         void _Tiny();
         void _Type();

@@ -13,11 +13,24 @@ Parser::Parser(istream* _fin) {
 }
 
 /**
+ * Grammar for Assignment
+ * @return void
+ */
+void Parser::_Assignment() {
+    _ReadIdentifier();
+    if (_IsToken(":=")) {
+        _ReadToken(":=");
+    }
+}
+
+/**
  * Grammar for Body
  * @return void
  */
 void Parser::_Body() {
     _ReadToken("begin");
+    _Statement();
+    _ReadToken("end");
 }
 
 /**
@@ -268,6 +281,19 @@ void Parser::_ReadWhitespace() {
 
         fin->get(my_c);
     } while(isWhiteSpace(my_c));
+}
+
+/**
+ * Grammar for statement
+ * @return void
+ */
+void Parser::_Statement() {
+    if (_IsIdentifier()) {
+        _Assignment();
+    }
+
+    _ReadToken(";");
+    _ReadToken("end");
 }
 
 /**

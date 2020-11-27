@@ -1,38 +1,22 @@
-#include <iostream>
 #include <sstream>
 #include "../parser.h"
+#include "./test_utils.h"
 using namespace std;
 
-class TestableParser : public Parser {
+class TestableParserIdentifier : public Parser {
     public:
-        TestableParser(istream* _fin);
+        TestableParserIdentifier(istream* _fin);
 };
 
-TestableParser::TestableParser(istream* _fin) {
+TestableParserIdentifier::TestableParserIdentifier(istream* _fin) {
     fin = _fin;
     line = 0;
-}
-
-void showError(string error) {
-    cout << "\033[1;31m" << error << "\033[0m" << endl;
-}
-
-void showSuccess(string success) {
-    cout << "\033[1;32m" << success << "\033[0m" << endl;
-}
-
-void assertEqual(bool a, bool b, string success, string error) {
-    if (a == b) {
-        showSuccess(success);
-    } else {
-        showError(error);
-    }
 }
 
 void test_IsIdentifier_1() {
     string id = "abc\000";
     istringstream iss(id);
-    TestableParser p(&iss);
+    TestableParserIdentifier p(&iss);
     p.fin->seekg(0);
     p.fin->get(p.my_c);
     bool result = p._IsIdentifier();
@@ -42,7 +26,7 @@ void test_IsIdentifier_1() {
 void test_IsIdentifier_2() {
     string id = "a$c\000";
     istringstream iss(id);
-    TestableParser p(&iss);
+    TestableParserIdentifier p(&iss);
     p.fin->seekg(0);
     p.fin->get(p.my_c);
     bool result = p._IsIdentifier();
@@ -52,7 +36,7 @@ void test_IsIdentifier_2() {
 void test_IsIdentifier_3() {
     string id = "2ab\000";
     istringstream iss(id);
-    TestableParser p(&iss);
+    TestableParserIdentifier p(&iss);
     p.fin->seekg(0);
     p.fin->get(p.my_c);
     bool result = p._IsIdentifier();
@@ -62,11 +46,21 @@ void test_IsIdentifier_3() {
 void test_IsIdentifier_4() {
     string id = "abd$\000";
     istringstream iss(id);
-    TestableParser p(&iss);
+    TestableParserIdentifier p(&iss);
     p.fin->seekg(0);
     p.fin->get(p.my_c);
     bool result = p._IsIdentifier();
     assertEqual(result, false, "Success abd$ is NOT an identifier", "Error abd$ shot not be an identifier");
+}
+
+void test_IsIdentifier_5() {
+    string id = "  abd\000";
+    istringstream iss(id);
+    TestableParserIdentifier p(&iss);
+    p.fin->seekg(0);
+    p.fin->get(p.my_c);
+    bool result = p._IsIdentifier();
+    assertEqual(result, true, "Success abd is an identifier", "Error abd shot not be an identifier");   
 }
 
 int main() {
@@ -74,5 +68,6 @@ int main() {
     test_IsIdentifier_2();
     test_IsIdentifier_3();
     test_IsIdentifier_4();
+    test_IsIdentifier_5();
     return 0;
 }

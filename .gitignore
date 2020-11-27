@@ -26,3 +26,4 @@ tests/parser_tests
 .vscode/tasks.dSYM/Contents/Resources/DWARF/tasks
 .vscode/tasks
 parser_tests
+parser_identifier_tests

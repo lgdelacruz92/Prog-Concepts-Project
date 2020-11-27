@@ -28,3 +28,5 @@ tests/parser_tests
 parser_tests
 parser_identifier_tests
 parser_body_tests
+tests/abc123
+tests/abc123.dSYM/Contents/Resources/DWARF/abc123

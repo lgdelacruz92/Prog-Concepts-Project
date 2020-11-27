@@ -13,9 +13,7 @@ public:
 };
 
 void tests_statement_1() {
-	string program = "begin\n"
-                     "  read(i)\n"
-                     "end\000";
+	string program = "a := 2";
     istringstream iss(program);
     ParserStatementTests p(&iss);
     p.fin->seekg(0);

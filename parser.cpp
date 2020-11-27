@@ -123,6 +123,8 @@ bool Parser::_IsIdentifier() {
             }
             fin->get(my_c);
         }
+        fin->seekg(original_position-1);
+        fin->get(my_c);
         return true;
     } else {
         return false;

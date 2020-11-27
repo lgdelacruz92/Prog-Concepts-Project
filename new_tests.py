@@ -55,7 +55,7 @@ with open('./.vscode/launch.json') as launch_dot_json:
         "externalConsole": False,
         "MIMode": "lldb",
         "preLaunchTask": "build " + filename
-    },
+    }
     launch_dot_json_dict['configurations'].insert(0, new_launch)
     with open('new_launch.json', "w") as new_launch_dot_json:
         json.dump(launch_dot_json_dict, new_launch_dot_json)

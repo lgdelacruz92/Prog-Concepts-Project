@@ -5,13 +5,37 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "build parser_tests",
+            "label": "build parser_body_tests",
             "command": "/usr/bin/clang++",
             "args": [
                 "-std=c++17",
                 "-stdlib=libc++",
                 "-g",
-                "./tests/parser_tests.cpp",
+                "./tests/parser_body_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "build parser_identifier_tests",
+            "command": "/usr/bin/clang++",
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_identifier_tests.cpp",
                 "parser.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"

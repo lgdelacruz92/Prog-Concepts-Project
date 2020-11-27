@@ -6,20 +6,30 @@ using namespace std;
 
 class TestableBodyParser: public Parser {
     public:
-        void _Statement() override {
-
+        TestableBodyParser(istream* _fin) {
+            fin = _fin;
+            line = 0;
         }
 };
 
+/**
+ * Make sure body starts with begin
+ * @return void
+ */
 void test_Body_1() {
-    string id = "abc\000";
-    istringstream iss(id);
+    string program = "begin\n"
+                     "  read(i)\n"
+                     "end\000";
+    istringstream iss(program);
     TestableBodyParser p(&iss);
     p.fin->seekg(0);
     p.fin->get(p.my_c);
-    bool result = p._IsIdentifier();
-    assertEqual(result, true, "Success abc is identifier", "Error \'abc\' is not an identifier");
-
+    try {
+        p._Body();
+        assertEqual(true, true, "Success Body should not throw an error", "");
+    } catch(int e) {
+        assertEqual(true, false, "", "Error, Body threw an error");
+    }
 }
 
 int main() {

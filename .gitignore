@@ -27,3 +27,4 @@ tests/parser_tests
 .vscode/tasks
 parser_tests
 parser_identifier_tests
+parser_body_tests

@@ -1,6 +1,9 @@
 subc: subc.cpp parser.o
 	g++ subc.cpp parser.o -o subc
 
+parser_statement_tests: ./tests/parser_statement_tests.cpp parser.o
+	g++ --std=c++17 ./tests/parser_statement_tests.cpp parser.o -o parser_statement_tests
+
 subc_tests: ./tests/subc_tests.cpp parser.o
 	g++ ./tests/subc_tests.cpp parser.o -o subc_tests
 

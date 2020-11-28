@@ -91,6 +91,14 @@ void Parser::_Dclns() {
 }
 
 /**
+ * Grammar for Expression
+ * @return void
+ */
+void Parser::_Expression() {
+    _Term();
+}
+
+/**
  * Grammar for Fcn
  * @return void
  */

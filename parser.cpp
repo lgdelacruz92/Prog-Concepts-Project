@@ -96,6 +96,37 @@ void Parser::_Dclns() {
  */
 void Parser::_Expression() {
     _Term();
+    if (_IsToken("<=") ||
+        _IsToken("<") ||
+        _IsToken(">=") ||
+        _IsToken(">") ||
+        _IsToken("=") ||
+        _IsToken("<>")) {
+        _Term();
+    }
+}
+
+/**
+ * Grammar for Factor
+ * @return void
+ */
+void Parser::_Factor() {
+    _Primary();
+    while (_IsToken("*") ||
+           _IsToken("/") ||
+           _IsToken("and") ||
+           _IsToken("mod")) {
+        if (_IsToken("*")) {
+            _ReadToken("*");
+        } else if (_IsToken("/")) {
+            _ReadToken("/");
+        } else if (_IsToken("and")) {
+            _ReadToken("and");
+        } else if (_IsToken("mod")) {
+            _ReadToken("mod");
+        }
+        _Primary();
+    }
 }
 
 /**
@@ -200,6 +231,36 @@ void Parser::_Params() {
         _Dcln();
         if (_IsToken(";")) {
             _ReadToken(";");
+        }
+    }
+}
+
+/**
+ * Grammar for Primary
+ * @return void
+ */
+void Parser::_Primary() {
+    if (_IsToken("-")) {
+        _ReadToken("-");
+        _Primary();
+    } else if (_IsToken("+")) {
+        _ReadToken("+");
+        _Primary();
+    } else if (_IsToken("not")) {
+        _ReadToken("not");
+        _Primary();
+    } else if (_IsToken("eof")) {
+        _ReadToken("eof");
+    } else if (_IsIdentifier()) {
+        _ReadIdentifier();
+        if (_IsToken("(")) {
+            _ReadToken("(");
+            _Expression();
+            while (_IsToken(",")) {
+                _ReadToken(",");
+                _Expression();
+            }
+            _ReadToken(")");
         }
     }
 }
@@ -322,13 +383,19 @@ void Parser::_SubProgs() {
  * @return void
  */
 void Parser::_Term() {
-    if (_IsToken("<=") ||
-        _IsToken("<") ||
-        _IsToken(">=") ||
-        _IsToken(">") ||
-        _IsToken("=") ||
-        _IsToken("<>")) {
-        _Term();
+    _Factor();
+    while (_IsToken("+") ||
+           _IsToken("-") ||
+           _IsToken("or")) {
+
+        if (_IsToken("+")) {
+            _ReadToken("+");
+        } else if (_IsToken("-")) {
+            _ReadToken("-");
+        } else if (_IsToken("or")) {
+            _ReadToken("or");
+        }
+        _Factor();
     }
 }
 

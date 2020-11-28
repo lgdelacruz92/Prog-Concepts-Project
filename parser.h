@@ -18,12 +18,14 @@ class Parser {
         virtual bool _Dcln();
         virtual void _Dclns();
         virtual void _Expression();
+        virtual void _Factor();
         virtual void _Fcn();
         virtual bool _IsIdentifier();
         virtual bool _IsToken(string token);
         virtual void _LitList();
         virtual void _Name();
         virtual void _Params();
+        virtual void _Primary();
         virtual void _ReadComment();
         virtual void _ReadIdentifier();
         virtual void _ReadWhitespace();

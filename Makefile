@@ -4,6 +4,9 @@ subc: subc.cpp parser.o
 parser_expression_tests: ./tests/parser_expression_tests.cpp parser.o
 	g++ --std=c++17 ./tests/parser_expression_tests.cpp parser.o -o parser_expression_tests
 
+parser_expression_tests: ./tests/parser_expression_tests.cpp parser.o
+	g++ --std=c++17 ./tests/parser_expression_tests.cpp parser.o -o parser_expression_tests
+
 parser_assignment_tests: ./tests/parser_assignment_tests.cpp parser.o
 	g++ --std=c++17 ./tests/parser_assignment_tests.cpp parser.o -o parser_assignment_tests
 

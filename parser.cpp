@@ -20,6 +20,7 @@ void Parser::_Assignment() {
     _ReadIdentifier();
     if (_IsToken(":=")) {
         _ReadToken(":=");
+        _Expression();
     }
 }
 

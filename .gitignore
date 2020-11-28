@@ -31,3 +31,4 @@ parser_body_tests
 tests/abc123
 tests/abc123.dSYM/Contents/Resources/DWARF/abc123
 parser_statement_tests
+parser_assignment_tests

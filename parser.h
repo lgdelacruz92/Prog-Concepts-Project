@@ -30,6 +30,7 @@ class Parser {
         virtual void _ReadToken(string token);
         virtual void _Statement();
         virtual void _SubProgs();
+        virtual void _Term();
         virtual void _Tiny();
         virtual void _Type();
         virtual void _Types();

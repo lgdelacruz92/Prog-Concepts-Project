@@ -318,6 +318,21 @@ void Parser::_SubProgs() {
 }
 
 /**
+ * Grammar for Term
+ * @return void
+ */
+void Parser::_Term() {
+    if (_IsToken("<=") ||
+        _IsToken("<") ||
+        _IsToken(">=") ||
+        _IsToken(">") ||
+        _IsToken("=") ||
+        _IsToken("<>")) {
+        _Term();
+    }
+}
+
+/**
  * Grammar for Type
  * @return void
  */

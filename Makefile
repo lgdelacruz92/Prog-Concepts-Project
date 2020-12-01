@@ -1,8 +1,8 @@
 subc: subc.cpp parser.o
 	g++ subc.cpp parser.o -o subc
 
-parser_expression_tests: ./tests/parser_expression_tests.cpp parser.o
-	g++ --std=c++17 ./tests/parser_expression_tests.cpp parser.o -o parser_expression_tests
+parser_subprogs_tests: ./tests/parser_subprogs_tests.cpp parser.o
+	g++ --std=c++17 ./tests/parser_subprogs_tests.cpp parser.o -o parser_subprogs_tests
 
 parser_expression_tests: ./tests/parser_expression_tests.cpp parser.o
 	g++ --std=c++17 ./tests/parser_expression_tests.cpp parser.o -o parser_expression_tests

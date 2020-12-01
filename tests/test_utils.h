@@ -9,10 +9,12 @@ void showSuccess(string success) {
     cout << "\033[1;32m" << success << "\033[0m" << endl;
 }
 
-void assertEqual(bool a, bool b, string success, string error) {
+void assertEqual(bool a, bool b, string success, string error, string title) {
     if (a == b) {
-        showSuccess(success);
+        showSuccess(title + ":\n");
+        showSuccess("\t" + success);
     } else {
-        showError(error);
+        showSuccess(title + ":\n");
+        showError("\t" + error);
     }
 }

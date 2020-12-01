@@ -22,6 +22,10 @@ void Parser::_Assignment() {
         _ReadToken(":=");
         _Expression();
     }
+    else if (_IsToken(":=:")) {
+        _ReadToken(":=:");
+        _Name();
+    }
 }
 
 /**
@@ -149,6 +153,30 @@ void Parser::_Fcn() {
 }
 
 /**
+ * Method that checks if the next token is char
+ * @return bool
+ */
+bool Parser::_IsChar() {
+    int original_position = fin->tellg();
+    _ReadWhitespace();
+    if (my_c == '\'') {
+        fin->get(my_c);
+        fin->get(my_c);
+        if (my_c == '\'') {
+            fin->get(my_c);
+        } else {
+            return false;
+        }
+
+        fin->seekg(original_position-1);
+        fin->get(my_c);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
  * Method that checks if next token is an identifier
  * @return bool
  */
@@ -167,8 +195,37 @@ bool Parser::_IsIdentifier() {
         fin->get(my_c);
         return true;
     } else {
+        fin->seekg(original_position-1);
+        fin->get(my_c);
         return false;
     }
+}
+
+/**
+ * Method that checks if the following characters make an integer
+ * @return bool
+ */
+bool Parser::_IsInteger() {
+    int original_position = fin->tellg();
+    _ReadWhitespace();
+    string val = "";
+    if (0 <= my_c - '0' && my_c - '0' <= 9) {
+        while (!fin->eof() && 0 <= my_c - '0' && my_c - '0' <= 9 && my_c != '\n' && my_c != ' ') {
+            val += my_c;
+            fin->get(my_c);
+        }
+
+        fin->clear();
+        fin->seekg(original_position-1);
+        fin->get(my_c);
+        return true;
+    } else {
+        fin->clear();
+        fin->seekg(original_position-1);
+        fin->get(my_c);
+        return false;
+    }
+
 }
 
 /**
@@ -262,7 +319,22 @@ void Parser::_Primary() {
             }
             _ReadToken(")");
         }
+    } else if (_IsInteger()) {
+        _ReadInteger();
+    } else if (_IsChar()) {
+        _ReadChar(); 
     }
+}
+
+/**
+ * Method that reads a char
+ * @return void
+ */
+void Parser::_ReadChar() {
+    _ReadWhitespace();
+    _ReadToken("\'");
+    fin->get(my_c);
+    _ReadToken("\'");
 }
 
 /**
@@ -313,6 +385,19 @@ void Parser::_ReadIdentifier() {
     } else {
         cout << "Invalid identifier at line " << line + 1 << endl;
         throw "";
+    }
+}
+
+/**
+ * Method that reads an integer
+ * @return void
+ */
+void Parser::_ReadInteger() {
+    _ReadWhitespace();
+    string val = "";
+    while (!fin->eof() && 0 <= my_c - '0' && my_c - '0' <= 9) {
+        val += my_c;
+        fin->get(my_c);
     }
 }
 

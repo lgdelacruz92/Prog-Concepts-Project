@@ -20,14 +20,18 @@ class Parser {
         virtual void _Expression();
         virtual void _Factor();
         virtual void _Fcn();
+        virtual bool _IsChar();
         virtual bool _IsIdentifier();
+        virtual bool _IsInteger();
         virtual bool _IsToken(string token);
         virtual void _LitList();
         virtual void _Name();
         virtual void _Params();
         virtual void _Primary();
+        virtual void _ReadChar();
         virtual void _ReadComment();
         virtual void _ReadIdentifier();
+        virtual void _ReadInteger();
         virtual void _ReadWhitespace();
         virtual void _ReadToken(string token);
         virtual void _Statement();

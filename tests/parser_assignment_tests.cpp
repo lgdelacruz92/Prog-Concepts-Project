@@ -20,9 +20,9 @@ void test_assignment_1() {
     p.fin->get(p.my_c);
     try {
         p._Assignment();
-        assertEqual(true, true, "Success Statement should not throw an error", "");
+        assertEqual(true, true, "Success Statement should not throw an error", "", "Test 1");
     } catch(int e) {
-        assertEqual(true, false, "", "Error, Statement threw an error");
+        assertEqual(true, false, "", "Error, Statement threw an error", "Test 2");
     }
 }
 
@@ -34,9 +34,9 @@ void test_assignment_2() {
     p.fin->get(p.my_c);
     try {
         p._Assignment();
-        assertEqual(true, true, "Success Statement should not throw an error", "");
+        assertEqual(true, true, "Success Statement should not throw an error", "", "Test 2");
     } catch(int e) {
-        assertEqual(true, false, "", "Error, Statement threw an error");
+        assertEqual(true, false, "", "Error, Statement threw an error", "Test 2");
     }	
 }
 

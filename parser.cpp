@@ -34,7 +34,12 @@ void Parser::_Assignment() {
  */
 void Parser::_Body() {
     _ReadToken("begin");
-    _Statement();
+    do {
+        if (_IsToken(";")) {
+            _ReadToken(";");
+        }
+        _Statement();
+    } while (_IsToken(";"));
     _ReadToken("end");
 }
 
@@ -150,12 +155,23 @@ void Parser::_Dclns() {
  */
 void Parser::_Expression() {
     _Term();
-    if (_IsToken("<=") ||
-        _IsToken("<") ||
-        _IsToken(">=") ||
-        _IsToken(">") ||
-        _IsToken("=") ||
-        _IsToken("<>")) {
+    if (_IsToken("<=")) {
+        _ReadToken("<=");
+        _Term();
+    } else if(_IsToken("<")) {
+        _ReadToken("<");
+        _Term();
+    } else if (_IsToken(">=")) {
+        _ReadToken(">=");
+        _Term();
+    } else if(_IsToken(">")) {
+        _ReadToken(">");
+        _Term();
+    } else if (_IsToken("=")) {
+        _ReadToken("=");
+        _Term();
+    } else if(_IsToken("<>")) {
+        _ReadToken("<>");
         _Term();
     }
 }
@@ -200,6 +216,8 @@ void Parser::_Fcn() {
     _Types();
     _Dclns();
     _Body();
+    _Name();
+    _ReadToken(";");
 }
 
 /**
@@ -273,7 +291,7 @@ bool Parser::_IsIdentifier() {
     if (isIdentifierStart(my_c)) {
         while(!isWhiteSpace(my_c) && !(fin->eof())) {
             if (!isIdentifierCharacter(my_c)) {
-                return false;
+                break;
             }
             fin->get(my_c);
         }
@@ -410,7 +428,7 @@ void Parser::_OtherwiseClause() {
  * @return void
  */
 void Parser::_OutExp() {
-    if (_IsInteger()) {
+    if (_IsExpression()) {
         _Expression();
     } else {
         _StringNode();
@@ -583,10 +601,7 @@ void Parser::_ReadWhitespace() {
  * @return void
  */
 void Parser::_Statement() {
-    if (_IsIdentifier()) {
-        _Assignment();
-    }
-    else if (_IsToken("output")) {
+    if (_IsToken("output")) {
         _ReadToken("output");
         _ReadToken("(");
         do {
@@ -659,9 +674,9 @@ void Parser::_Statement() {
         _ReadToken("begin");
         _Body();
     }
-
-    _ReadToken(";");
-    _ReadToken("end");
+    else if (_IsIdentifier()) {
+        _Assignment();
+    }
 }
 
 /**

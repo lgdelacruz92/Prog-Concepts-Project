@@ -201,7 +201,15 @@ bool Parser::_IsChar() {
  * @return bool
  */
 bool Parser::_IsExpression() {
-    return true;
+    return _IsTerm();
+}
+
+/**
+ * Method that checks if next token is a factor
+ * @return bool
+ */
+bool Parser::_IsFactor() {
+    return _IsPrimary();
 }
 
 /**
@@ -227,6 +235,33 @@ bool Parser::_IsIdentifier() {
         fin->get(my_c);
         return false;
     }
+}
+
+/**
+ * Method that checks if the next token is a Primary
+ * @return bool
+ */
+bool Parser::_IsPrimary() {
+    return _IsToken("-") ||
+           _IsToken("+") ||
+           _IsToken("not") ||
+           _IsToken("eof") ||
+           _IsIdentifier() ||
+           _IsInteger() ||
+           _IsChar() ||
+           _IsToken("(") ||
+           _IsToken("succ") ||
+           _IsToken("pred") ||
+           _IsToken("chr") ||
+           _IsToken("ord");
+}
+
+/**
+ * Method that checks if the next token is a Term
+ * @return bool
+ */
+bool Parser::_IsTerm() {
+    return _IsFactor();
 }
 
 /**

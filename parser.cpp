@@ -280,6 +280,18 @@ void Parser::_Name() {
 }
 
 /**
+ * Grammar for out expression
+ * @return void
+ */
+void Parser::_OutExp() {
+    if (_IsInteger()) {
+        _Expression();
+    } else {
+        _StringNode();
+    }
+}
+
+/**
  * Grammar for Params
  * @return void
  */
@@ -448,9 +460,29 @@ void Parser::_Statement() {
     if (_IsIdentifier()) {
         _Assignment();
     }
+    else if (_IsToken("output")) {
+        _ReadToken("output");
+        _ReadToken("(");
+        do {
+            _OutExp();
+        } while(_IsToken(","));
+        _ReadToken(")");
+    }
 
     _ReadToken(";");
     _ReadToken("end");
+}
+
+/**
+ * Grammar for StringNode
+ * @return void
+ */
+void Parser::_StringNode() {
+    _ReadWhitespace();
+    _ReadToken("\"");
+    do {
+        fin->get(my_c);
+    } while(!fin->eof() && my_c != '"');
 }
 
 /**

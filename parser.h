@@ -26,6 +26,7 @@ class Parser {
         virtual bool _IsToken(string token);
         virtual void _LitList();
         virtual void _Name();
+        virtual void _OutExp();
         virtual void _Params();
         virtual void _Primary();
         virtual void _ReadChar();
@@ -35,6 +36,7 @@ class Parser {
         virtual void _ReadWhitespace();
         virtual void _ReadToken(string token);
         virtual void _Statement();
+        virtual void _StringNode();
         virtual void _SubProgs();
         virtual void _Term();
         virtual void _Tiny();

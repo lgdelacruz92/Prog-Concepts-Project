@@ -19,8 +19,11 @@ class Parser {
         virtual void _Dclns();
         virtual void _Expression();
         virtual void _Factor();
+        virtual void _ForExp();
+        virtual void _ForStat();
         virtual void _Fcn();
         virtual bool _IsChar();
+        virtual bool _IsExpression();
         virtual bool _IsIdentifier();
         virtual bool _IsInteger();
         virtual bool _IsToken(string token);

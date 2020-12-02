@@ -153,6 +153,26 @@ void Parser::_Fcn() {
 }
 
 /**
+ * Grammar for ForStat
+ * @return void
+ */
+void Parser::_ForStat() {
+    if (_IsIdentifier()) {
+        _Assignment();
+    }
+}
+
+/**
+ * Grammar for ForExp
+ * @return void
+ */
+void Parser::_ForExp() {
+    if (_IsExpression()) {
+        _Expression();
+    }
+}
+
+/**
  * Method that checks if the next token is char
  * @return bool
  */
@@ -174,6 +194,14 @@ bool Parser::_IsChar() {
     } else {
         return false;
     }
+}
+
+/**
+ * Method that checks if the next token is an expression
+ * @return bool
+ */
+bool Parser::_IsExpression() {
+    return true;
 }
 
 /**
@@ -467,6 +495,40 @@ void Parser::_Statement() {
             _OutExp();
         } while(_IsToken(","));
         _ReadToken(")");
+    }
+    else if (_IsToken("if")) {
+        _ReadToken("if");
+        _Expression();
+        _ReadToken("then");
+        _Statement();
+        if (_IsToken("else")) {
+            _Statement();
+        }
+    }
+    else if (_IsToken("while")) {
+        _ReadToken("while");
+        _Expression();
+        _ReadToken("do");
+        _Statement();
+    }
+    else if (_IsToken("repeat")) {
+        do {
+            _Statement();
+        } while (_IsToken(";"));
+        _ReadToken("until");
+        _Expression();
+
+    }
+    else if (_IsToken("for")) {
+        _ReadToken("for");
+        _ReadToken("(");
+        _ForStat();
+        _ReadToken(";");
+        _ForExp();
+        _ReadToken(";");
+        _ForStat();
+        _ReadToken(")");
+        _Statement();
     }
 
     _ReadToken(";");

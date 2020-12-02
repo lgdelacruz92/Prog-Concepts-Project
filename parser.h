@@ -15,8 +15,10 @@ class Parser {
         virtual void _Body();
         virtual void _Caseclause();
         virtual void _Caseclauses();
+        virtual void _CaseExpression();
         virtual void _Const();
         virtual void _Consts();
+        virtual void _ConstValue();
         virtual bool _Dcln();
         virtual void _Dclns();
         virtual void _Expression();

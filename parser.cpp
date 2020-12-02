@@ -43,7 +43,11 @@ void Parser::_Body() {
  * @return void
  */
 void Parser::_Caseclause() {
-    
+    do {
+        _CaseExpression();
+    } while (_IsToken(","));
+    _ReadToken(";");
+    _Statement();
 }
 
 /**
@@ -54,6 +58,17 @@ void Parser::_Caseclauses() {
     do {
         _Caseclause();
     } while (_IsToken(";"));
+}
+
+/**
+ * Grammar for CaseExpression
+ * @return void
+ */
+void Parser::_CaseExpression() {
+    _ConstValue();
+    if (_IsToken("..")) {
+        _ConstValue();
+    }
 }
 
 /**
@@ -73,6 +88,23 @@ void Parser::_Consts() {
     if (_IsToken("const")) {
         _ReadToken("const");
         _Const();
+    }
+}
+
+/**
+ * Grammar for CosntValue
+ * @return void
+ */
+void Parser::_ConstValue() {
+    if (_IsInteger()) {
+        _ReadInteger();
+    } else if (_IsChar()) {
+        _ReadChar();
+    } else if (_IsIdentifier()) {
+        _ReadIdentifier();
+    } else {
+        string message = "Nont a valid ConstValue on " + to_string(line);
+        throw message;
     }
 }
 
@@ -361,6 +393,19 @@ void Parser::_Name() {
 }
 
 /**
+ * Grammar for OtherwiseClause
+ * @return void
+ */
+void Parser::_OtherwiseClause() {
+    if (_IsToken("otherwise")) {
+        _ReadToken("otherwise");
+        _Statement();
+    } else {
+        _ReadToken(";");
+    }
+}
+
+/**
  * Grammar for out expression
  * @return void
  */
@@ -597,6 +642,22 @@ void Parser::_Statement() {
         _Caseclauses();
         _OtherwiseClause();
         _ReadToken("end");
+    }
+    else if (_IsToken("read")) {
+        _ReadToken("read");
+        _ReadToken("(");
+        do {
+            _Name();
+        } while (_IsToken(","));
+        _ReadToken(")");
+    }
+    else if (_IsToken("return")) {
+        _ReadToken("return");
+        _Expression();
+    }
+    else if (_IsToken("begin")) {
+        _ReadToken("begin");
+        _Body();
     }
 
     _ReadToken(";");

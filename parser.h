@@ -13,6 +13,8 @@ class Parser {
         virtual ~Parser();
         virtual void _Assignment();
         virtual void _Body();
+        virtual void _Caseclause();
+        virtual void _Caseclauses();
         virtual void _Const();
         virtual void _Consts();
         virtual bool _Dcln();
@@ -33,6 +35,7 @@ class Parser {
         virtual void _LitList();
         virtual void _Name();
         virtual void _OutExp();
+        virtual void _OtherwiseClause();
         virtual void _Params();
         virtual void _Primary();
         virtual void _ReadChar();

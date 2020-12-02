@@ -39,6 +39,24 @@ void Parser::_Body() {
 }
 
 /**
+ * Gramnmar for Caseclause
+ * @return void
+ */
+void Parser::_Caseclause() {
+    
+}
+
+/**
+ * Grammar for Caseclauses
+ * @return void
+ */
+void Parser::_Caseclauses() {
+    do {
+        _Caseclause();
+    } while (_IsToken(";"));
+}
+
+/**
  * Grammar for Const
  * @return void
  */
@@ -564,6 +582,21 @@ void Parser::_Statement() {
         _ForStat();
         _ReadToken(")");
         _Statement();
+    }
+    else if (_IsToken("loop")) {
+        _ReadToken("loop");
+        do {
+            _Statement();
+        } while (_IsToken(";"));
+        _ReadToken("pool");
+    }
+    else if (_IsToken("case")) {
+        _ReadToken("case");
+        _Expression();
+        _ReadToken("of");
+        _Caseclauses();
+        _OtherwiseClause();
+        _ReadToken("end");
     }
 
     _ReadToken(";");

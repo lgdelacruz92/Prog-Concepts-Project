@@ -745,6 +745,9 @@ void Parser::_Tiny() {
     _Types();
     _Dclns();
     _SubProgs();
+    _Body();
+    _Name();
+    _ReadToken(".");
 }
 
 Parser::~Parser() {

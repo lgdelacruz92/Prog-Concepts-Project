@@ -1,1 +1,124 @@
-{"version": "0.2.0", "configurations": [{"args": [], "externalConsole": false, "name": "run parser_string_node_tests", "request": "launch", "MIMode": "lldb", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "build parser_string_node_tests", "type": "cppdbg", "cwd": "${workspaceFolder}"}, {"externalConsole": false, "name": "run parser_subprogs_tests", "args": [], "request": "launch", "cwd": "${workspaceFolder}", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "build parser_subprogs_tests", "type": "cppdbg", "MIMode": "lldb"}, {"args": [], "name": "run parser_expression_tests", "externalConsole": false, "request": "launch", "MIMode": "lldb", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "build parser_expression_tests", "type": "cppdbg", "cwd": "${workspaceFolder}"}, {"externalConsole": false, "name": "run parser_expression_tests", "args": [], "request": "launch", "cwd": "${workspaceFolder}", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "build parser_expression_tests", "type": "cppdbg", "MIMode": "lldb"}, {"args": [], "name": "run parser_assignment_tests", "externalConsole": false, "request": "launch", "MIMode": "lldb", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "build parser_assignment_tests", "type": "cppdbg", "cwd": "${workspaceFolder}"}, {"externalConsole": false, "name": "run parser_statement_tests", "args": [], "request": "launch", "cwd": "${workspaceFolder}", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "build parser_statement_tests", "type": "cppdbg", "MIMode": "lldb"}, {"args": [], "name": "run parser_body_tests", "externalConsole": false, "request": "launch", "cwd": "${workspaceFolder}", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "build parser_body_tests", "type": "cppdbg", "MIMode": "lldb"}, {"args": [], "name": "run parser_identifier_tests", "externalConsole": false, "request": "launch", "cwd": "${workspaceFolder}", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "build parser_identifier_tests", "type": "cppdbg", "MIMode": "lldb"}, {"args": ["tiny_test_progs/tiny_03"], "name": "clang++ - Build and debug active file", "externalConsole": false, "request": "launch", "cwd": "${workspaceFolder}", "environment": [], "stopAtEntry": true, "program": "${fileDirname}/${fileBasenameNoExtension}", "preLaunchTask": "clang++ build active file", "type": "cppdbg", "MIMode": "lldb"}]}
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "args": [],
+            "externalConsole": false,
+            "name": "run parser_string_node_tests",
+            "request": "launch",
+            "MIMode": "lldb",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "build parser_string_node_tests",
+            "type": "cppdbg",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "externalConsole": false,
+            "name": "run parser_subprogs_tests",
+            "args": [],
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "build parser_subprogs_tests",
+            "type": "cppdbg",
+            "MIMode": "lldb"
+        },
+        {
+            "args": [],
+            "name": "run parser_expression_tests",
+            "externalConsole": false,
+            "request": "launch",
+            "MIMode": "lldb",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "build parser_expression_tests",
+            "type": "cppdbg",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "externalConsole": false,
+            "name": "run parser_expression_tests",
+            "args": [],
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "build parser_expression_tests",
+            "type": "cppdbg",
+            "MIMode": "lldb"
+        },
+        {
+            "args": [],
+            "name": "run parser_assignment_tests",
+            "externalConsole": false,
+            "request": "launch",
+            "MIMode": "lldb",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "build parser_assignment_tests",
+            "type": "cppdbg",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "externalConsole": false,
+            "name": "run parser_statement_tests",
+            "args": [],
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "build parser_statement_tests",
+            "type": "cppdbg",
+            "MIMode": "lldb"
+        },
+        {
+            "args": [],
+            "name": "run parser_body_tests",
+            "externalConsole": false,
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "build parser_body_tests",
+            "type": "cppdbg",
+            "MIMode": "lldb"
+        },
+        {
+            "args": [],
+            "name": "run parser_identifier_tests",
+            "externalConsole": false,
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "build parser_identifier_tests",
+            "type": "cppdbg",
+            "MIMode": "lldb"
+        },
+        {
+            "args": [
+                "tiny_test_progs/tiny_01"
+            ],
+            "name": "clang++ - Build and debug active file",
+            "externalConsole": false,
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "clang++ build active file",
+            "type": "cppdbg",
+            "MIMode": "lldb"
+        }
+    ]
+}

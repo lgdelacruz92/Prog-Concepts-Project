@@ -13,7 +13,7 @@ public:
 };
 
 void test_string_node_1() {
-	string program = "a :=: b";
+	string program = "\"string\"";
     istringstream iss(program);
     ParserStringNodeTests p(&iss);
     p.fin->seekg(0);

@@ -625,7 +625,11 @@ void Parser::_Statement() {
         _Statement();
     }
     else if (_IsToken("repeat")) {
+        _ReadToken("repeat");
         do {
+            if (_IsToken(";")) {
+                _ReadToken(";");
+            }
             _Statement();
         } while (_IsToken(";"));
         _ReadToken("until");

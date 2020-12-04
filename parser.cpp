@@ -50,6 +50,15 @@ void Parser::Body() {
  * @return void
  */
 void Parser::BuildTree(string node, int num_pop) {
+    AST* p = nullptr;
+    for (int i = 0; i < num_pop; i++) {
+        AST* c = ast_stack.top();
+        ast_stack.pop();
+        c->right = p;
+        p = c;
+    }
+    AST* new_node = new AST(node, p, nullptr);
+    ast_stack.push(new_node);
 }
 
 /**

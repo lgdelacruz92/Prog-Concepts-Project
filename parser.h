@@ -3,6 +3,8 @@
 #include <string>
 #include <stack>
 #include <set>
+#include <stack>
+#include "ast.h"
 
 using namespace std;
 
@@ -55,6 +57,7 @@ class Parser {
         virtual void Type();
         virtual void Types();
         istream* fin;
+        stack<AST*> ast_stack;
         char my_c;
         int line;
 };

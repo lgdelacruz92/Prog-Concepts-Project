@@ -16,15 +16,15 @@ Parser::Parser(istream* _fin) {
  * Grammar for Assignment
  * @return void
  */
-void Parser::_Assignment() {
-    _ReadIdentifier();
-    if (_IsToken(":=")) {
-        _ReadToken(":=");
-        _Expression();
+void Parser::Assignment() {
+    ReadIdentifier();
+    if (IsToken(":=")) {
+        ReadToken(":=");
+        Expression();
     }
-    else if (_IsToken(":=:")) {
-        _ReadToken(":=:");
-        _Name();
+    else if (IsToken(":=:")) {
+        ReadToken(":=:");
+        Name();
     }
 }
 
@@ -32,47 +32,47 @@ void Parser::_Assignment() {
  * Grammar for Body
  * @return void
  */
-void Parser::_Body() {
-    _ReadToken("begin");
+void Parser::Body() {
+    ReadToken("begin");
     do {
-        if (_IsToken(";")) {
-            _ReadToken(";");
+        if (IsToken(";")) {
+            ReadToken(";");
         }
-        _Statement();
-    } while (_IsToken(";"));
-    _ReadToken("end");
+        Statement();
+    } while (IsToken(";"));
+    ReadToken("end");
 }
 
 /**
  * Gramnmar for Caseclause
  * @return void
  */
-void Parser::_Caseclause() {
+void Parser::Caseclause() {
     do {
-        _CaseExpression();
-    } while (_IsToken(","));
-    _ReadToken(";");
-    _Statement();
+        CaseExpression();
+    } while (IsToken(","));
+    ReadToken(";");
+    Statement();
 }
 
 /**
  * Grammar for Caseclauses
  * @return void
  */
-void Parser::_Caseclauses() {
+void Parser::Caseclauses() {
     do {
-        _Caseclause();
-    } while (_IsToken(";"));
+        Caseclause();
+    } while (IsToken(";"));
 }
 
 /**
  * Grammar for CaseExpression
  * @return void
  */
-void Parser::_CaseExpression() {
-    _ConstValue();
-    if (_IsToken("..")) {
-        _ConstValue();
+void Parser::CaseExpression() {
+    ConstValue();
+    if (IsToken("..")) {
+        ConstValue();
     }
 }
 
@@ -80,19 +80,19 @@ void Parser::_CaseExpression() {
  * Grammar for Const
  * @return void
  */
-void Parser::_Const() {
-    _Name();
-    _ReadToken("=");
+void Parser::Const() {
+    Name();
+    ReadToken("=");
 }
 
 /**
  * Grammar for Consts
  * @return void
  */
-void Parser::_Consts() {
-    if (_IsToken("const")) {
-        _ReadToken("const");
-        _Const();
+void Parser::Consts() {
+    if (IsToken("const")) {
+        ReadToken("const");
+        Const();
     }
 }
 
@@ -100,13 +100,13 @@ void Parser::_Consts() {
  * Grammar for CosntValue
  * @return void
  */
-void Parser::_ConstValue() {
-    if (_IsInteger()) {
-        _ReadInteger();
-    } else if (_IsChar()) {
-        _ReadChar();
-    } else if (_IsIdentifier()) {
-        _ReadIdentifier();
+void Parser::ConstValue() {
+    if (IsInteger()) {
+        ReadInteger();
+    } else if (IsChar()) {
+        ReadChar();
+    } else if (IsIdentifier()) {
+        ReadIdentifier();
     } else {
         string message = "Nont a valid ConstValue on " + to_string(line);
         throw message;
@@ -117,17 +117,17 @@ void Parser::_ConstValue() {
  * Grammar for Dcln
  * @return void
  */
-bool Parser::_Dcln() {
+bool Parser::Dcln() {
     int original_pos = fin->tellg();
     do {
-        if (_IsToken(",")) {
-            _ReadToken(",");
+        if (IsToken(",")) {
+            ReadToken(",");
         }
-        _Name();
-    } while (_IsToken(","));
-    if (_IsToken(":")) {
-        _ReadToken(":");
-        _ReadIdentifier();
+        Name();
+    } while (IsToken(","));
+    if (IsToken(":")) {
+        ReadToken(":");
+        ReadIdentifier();
         return true;
     } else {
         fin->seekg(original_pos-1);
@@ -140,11 +140,11 @@ bool Parser::_Dcln() {
  * Grammar for Dclns
  * @return void
  */
-void Parser::_Dclns() {
-    if (_IsToken("var")) {
-        _ReadToken("var");
-        while (_Dcln()) {
-            _ReadToken(";");
+void Parser::Dclns() {
+    if (IsToken("var")) {
+        ReadToken("var");
+        while (Dcln()) {
+            ReadToken(";");
         }
     }
 }
@@ -153,26 +153,26 @@ void Parser::_Dclns() {
  * Grammar for Expression
  * @return void
  */
-void Parser::_Expression() {
-    _Term();
-    if (_IsToken("<=")) {
-        _ReadToken("<=");
-        _Term();
-    } else if(_IsToken("<")) {
-        _ReadToken("<");
-        _Term();
-    } else if (_IsToken(">=")) {
-        _ReadToken(">=");
-        _Term();
-    } else if(_IsToken(">")) {
-        _ReadToken(">");
-        _Term();
-    } else if (_IsToken("=")) {
-        _ReadToken("=");
-        _Term();
-    } else if(_IsToken("<>")) {
-        _ReadToken("<>");
-        _Term();
+void Parser::Expression() {
+    Term();
+    if (IsToken("<=")) {
+        ReadToken("<=");
+        Term();
+    } else if(IsToken("<")) {
+        ReadToken("<");
+        Term();
+    } else if (IsToken(">=")) {
+        ReadToken(">=");
+        Term();
+    } else if(IsToken(">")) {
+        ReadToken(">");
+        Term();
+    } else if (IsToken("=")) {
+        ReadToken("=");
+        Term();
+    } else if(IsToken("<>")) {
+        ReadToken("<>");
+        Term();
     }
 }
 
@@ -180,22 +180,22 @@ void Parser::_Expression() {
  * Grammar for Factor
  * @return void
  */
-void Parser::_Factor() {
-    _Primary();
-    while (_IsToken("*") ||
-           _IsToken("/") ||
-           _IsToken("and") ||
-           _IsToken("mod")) {
-        if (_IsToken("*")) {
-            _ReadToken("*");
-        } else if (_IsToken("/")) {
-            _ReadToken("/");
-        } else if (_IsToken("and")) {
-            _ReadToken("and");
-        } else if (_IsToken("mod")) {
-            _ReadToken("mod");
+void Parser::Factor() {
+    Primary();
+    while (IsToken("*") ||
+           IsToken("/") ||
+           IsToken("and") ||
+           IsToken("mod")) {
+        if (IsToken("*")) {
+            ReadToken("*");
+        } else if (IsToken("/")) {
+            ReadToken("/");
+        } else if (IsToken("and")) {
+            ReadToken("and");
+        } else if (IsToken("mod")) {
+            ReadToken("mod");
         }
-        _Primary();
+        Primary();
     }
 }
 
@@ -203,30 +203,30 @@ void Parser::_Factor() {
  * Grammar for Fcn
  * @return void
  */
-void Parser::_Fcn() {
-    _ReadToken("function");
-    _Name();
-    _ReadToken("(");
-    _Params();
-    _ReadToken(")");
-    _ReadToken(":");
-    _Name();
-    _ReadToken(";");
-    _Consts();
-    _Types();
-    _Dclns();
-    _Body();
-    _Name();
-    _ReadToken(";");
+void Parser::Fcn() {
+    ReadToken("function");
+    Name();
+    ReadToken("(");
+    Params();
+    ReadToken(")");
+    ReadToken(":");
+    Name();
+    ReadToken(";");
+    Consts();
+    Types();
+    Dclns();
+    Body();
+    Name();
+    ReadToken(";");
 }
 
 /**
  * Grammar for ForStat
  * @return void
  */
-void Parser::_ForStat() {
-    if (_IsIdentifier()) {
-        _Assignment();
+void Parser::ForStat() {
+    if (IsIdentifier()) {
+        Assignment();
     }
 }
 
@@ -234,9 +234,9 @@ void Parser::_ForStat() {
  * Grammar for ForExp
  * @return void
  */
-void Parser::_ForExp() {
-    if (_IsExpression()) {
-        _Expression();
+void Parser::ForExp() {
+    if (IsExpression()) {
+        Expression();
     }
 }
 
@@ -244,9 +244,9 @@ void Parser::_ForExp() {
  * Method that checks if the next token is char
  * @return bool
  */
-bool Parser::_IsChar() {
+bool Parser::IsChar() {
     int original_position = fin->tellg();
-    _ReadWhitespace();
+    ReadWhitespace();
     if (my_c == '\'') {
         fin->get(my_c);
         fin->get(my_c);
@@ -268,25 +268,25 @@ bool Parser::_IsChar() {
  * Method that checks if the next token is an expression
  * @return bool
  */
-bool Parser::_IsExpression() {
-    return _IsTerm();
+bool Parser::IsExpression() {
+    return IsTerm();
 }
 
 /**
  * Method that checks if next token is a factor
  * @return bool
  */
-bool Parser::_IsFactor() {
-    return _IsPrimary();
+bool Parser::IsFactor() {
+    return IsPrimary();
 }
 
 /**
  * Method that checks if next token is an identifier
  * @return bool
  */
-bool Parser::_IsIdentifier() {
+bool Parser::IsIdentifier() {
     int original_position = fin->tellg();
-    _ReadWhitespace();
+    ReadWhitespace();
 
     if (isIdentifierStart(my_c)) {
         while(!isWhiteSpace(my_c) && !(fin->eof())) {
@@ -309,36 +309,36 @@ bool Parser::_IsIdentifier() {
  * Method that checks if the next token is a Primary
  * @return bool
  */
-bool Parser::_IsPrimary() {
-    return _IsToken("-") ||
-           _IsToken("+") ||
-           _IsToken("not") ||
-           _IsToken("eof") ||
-           _IsIdentifier() ||
-           _IsInteger() ||
-           _IsChar() ||
-           _IsToken("(") ||
-           _IsToken("succ") ||
-           _IsToken("pred") ||
-           _IsToken("chr") ||
-           _IsToken("ord");
+bool Parser::IsPrimary() {
+    return IsToken("-") ||
+           IsToken("+") ||
+           IsToken("not") ||
+           IsToken("eof") ||
+           IsIdentifier() ||
+           IsInteger() ||
+           IsChar() ||
+           IsToken("(") ||
+           IsToken("succ") ||
+           IsToken("pred") ||
+           IsToken("chr") ||
+           IsToken("ord");
 }
 
 /**
  * Method that checks if the next token is a Term
  * @return bool
  */
-bool Parser::_IsTerm() {
-    return _IsFactor();
+bool Parser::IsTerm() {
+    return IsFactor();
 }
 
 /**
  * Method that checks if the following characters make an integer
  * @return bool
  */
-bool Parser::_IsInteger() {
+bool Parser::IsInteger() {
     int original_position = fin->tellg();
-    _ReadWhitespace();
+    ReadWhitespace();
     string val = "";
     if (0 <= my_c - '0' && my_c - '0' <= 9) {
         while (!fin->eof() && 0 <= my_c - '0' && my_c - '0' <= 9 && my_c != '\n' && my_c != ' ') {
@@ -364,9 +364,9 @@ bool Parser::_IsInteger() {
  * a token
  * @return bool
  */
-bool Parser::_IsToken(string token) {
+bool Parser::IsToken(string token) {
     int original_pos = fin->tellg();
-    _ReadWhitespace();
+    ReadWhitespace();
     bool is_token = true;
     for (int i = 0; i < token.size(); i++) {
         if (token[i] != my_c) {
@@ -386,40 +386,40 @@ bool Parser::_IsToken(string token) {
  * Grammar for LitList
  * @return void
  */
-void Parser::_LitList() {
-    _ReadToken("(");
-    _ReadWhitespace();
-    while (!_IsToken(")")) {
-        _Name();
-        _ReadWhitespace();
-        if (_IsToken(")")) {
+void Parser::LitList() {
+    ReadToken("(");
+    ReadWhitespace();
+    while (!IsToken(")")) {
+        Name();
+        ReadWhitespace();
+        if (IsToken(")")) {
             break;
-        } else if (_IsToken(",")) {
-            _ReadToken(",");
+        } else if (IsToken(",")) {
+            ReadToken(",");
         }
-        _ReadWhitespace();
+        ReadWhitespace();
     }
-    _ReadToken(")");
+    ReadToken(")");
 }
 
 /**
  * Grammar for Name
  * @return void
  */
-void Parser::_Name() {
-    _ReadIdentifier();
+void Parser::Name() {
+    ReadIdentifier();
 }
 
 /**
  * Grammar for OtherwiseClause
  * @return void
  */
-void Parser::_OtherwiseClause() {
-    if (_IsToken("otherwise")) {
-        _ReadToken("otherwise");
-        _Statement();
+void Parser::OtherwiseClause() {
+    if (IsToken("otherwise")) {
+        ReadToken("otherwise");
+        Statement();
     } else {
-        _ReadToken(";");
+        ReadToken(";");
     }
 }
 
@@ -427,11 +427,11 @@ void Parser::_OtherwiseClause() {
  * Grammar for out expression
  * @return void
  */
-void Parser::_OutExp() {
-    if (_IsExpression()) {
-        _Expression();
+void Parser::OutExp() {
+    if (IsExpression()) {
+        Expression();
     } else {
-        _StringNode();
+        StringNode();
     }
 }
 
@@ -439,11 +439,11 @@ void Parser::_OutExp() {
  * Grammar for Params
  * @return void
  */
-void Parser::_Params() {
-    while(!_IsToken(")")) {
-        _Dcln();
-        if (_IsToken(";")) {
-            _ReadToken(";");
+void Parser::Params() {
+    while(!IsToken(")")) {
+        Dcln();
+        if (IsToken(";")) {
+            ReadToken(";");
         }
     }
 }
@@ -452,33 +452,33 @@ void Parser::_Params() {
  * Grammar for Primary
  * @return void
  */
-void Parser::_Primary() {
-    if (_IsToken("-")) {
-        _ReadToken("-");
-        _Primary();
-    } else if (_IsToken("+")) {
-        _ReadToken("+");
-        _Primary();
-    } else if (_IsToken("not")) {
-        _ReadToken("not");
-        _Primary();
-    } else if (_IsToken("eof")) {
-        _ReadToken("eof");
-    } else if (_IsIdentifier()) {
-        _ReadIdentifier();
-        if (_IsToken("(")) {
-            _ReadToken("(");
-            _Expression();
-            while (_IsToken(",")) {
-                _ReadToken(",");
-                _Expression();
+void Parser::Primary() {
+    if (IsToken("-")) {
+        ReadToken("-");
+        Primary();
+    } else if (IsToken("+")) {
+        ReadToken("+");
+        Primary();
+    } else if (IsToken("not")) {
+        ReadToken("not");
+        Primary();
+    } else if (IsToken("eof")) {
+        ReadToken("eof");
+    } else if (IsIdentifier()) {
+        ReadIdentifier();
+        if (IsToken("(")) {
+            ReadToken("(");
+            Expression();
+            while (IsToken(",")) {
+                ReadToken(",");
+                Expression();
             }
-            _ReadToken(")");
+            ReadToken(")");
         }
-    } else if (_IsInteger()) {
-        _ReadInteger();
-    } else if (_IsChar()) {
-        _ReadChar(); 
+    } else if (IsInteger()) {
+        ReadInteger();
+    } else if (IsChar()) {
+        ReadChar(); 
     }
 }
 
@@ -486,18 +486,18 @@ void Parser::_Primary() {
  * Method that reads a char
  * @return void
  */
-void Parser::_ReadChar() {
-    _ReadWhitespace();
-    _ReadToken("\'");
+void Parser::ReadChar() {
+    ReadWhitespace();
+    ReadToken("\'");
     fin->get(my_c);
-    _ReadToken("\'");
+    ReadToken("\'");
 }
 
 /**
  * Method that iterates through the comment characters
  * @return void
  */
-void Parser::_ReadComment() {
+void Parser::ReadComment() {
     // Keep reading charaters until the brackets count
     // goes to zero
     // '{' is +1, '}' is -1
@@ -524,9 +524,9 @@ void Parser::_ReadComment() {
  * Method that reads an identifier
  * @return void
  */
-void Parser::_ReadIdentifier() {
+void Parser::ReadIdentifier() {
     // First skip through all whitespace
-    _ReadWhitespace();
+    ReadWhitespace();
 
     // Is it a valid identifier start char
     if (isIdentifierStart(my_c)) {
@@ -548,8 +548,8 @@ void Parser::_ReadIdentifier() {
  * Method that reads an integer
  * @return void
  */
-void Parser::_ReadInteger() {
-    _ReadWhitespace();
+void Parser::ReadInteger() {
+    ReadWhitespace();
     string val = "";
     while (!fin->eof() && 0 <= my_c - '0' && my_c - '0' <= 9) {
         val += my_c;
@@ -561,9 +561,9 @@ void Parser::_ReadInteger() {
  * Method that reads the specified token
  * @return void
  */
-void Parser::_ReadToken(string token) {
+void Parser::ReadToken(string token) {
     // First skip all whitespace
-    _ReadWhitespace();
+    ReadWhitespace();
 
     // If there is a single character that mismatch
     // throw error
@@ -580,7 +580,7 @@ void Parser::_ReadToken(string token) {
  * Method that reads through all whitespace
  * @return void
  */
-void Parser::_ReadWhitespace() {
+void Parser::ReadWhitespace() {
     // While there is a whitespace move to the next char
     do {
         // Counting the line is useful for error logs
@@ -600,86 +600,86 @@ void Parser::_ReadWhitespace() {
  * Grammar for statement
  * @return void
  */
-void Parser::_Statement() {
-    if (_IsToken("output")) {
-        _ReadToken("output");
-        _ReadToken("(");
+void Parser::Statement() {
+    if (IsToken("output")) {
+        ReadToken("output");
+        ReadToken("(");
         do {
-            _OutExp();
-        } while(_IsToken(","));
-        _ReadToken(")");
+            OutExp();
+        } while(IsToken(","));
+        ReadToken(")");
     }
-    else if (_IsToken("if")) {
-        _ReadToken("if");
-        _Expression();
-        _ReadToken("then");
-        _Statement();
-        if (_IsToken("else")) {
-            _Statement();
+    else if (IsToken("if")) {
+        ReadToken("if");
+        Expression();
+        ReadToken("then");
+        Statement();
+        if (IsToken("else")) {
+            Statement();
         }
     }
-    else if (_IsToken("while")) {
-        _ReadToken("while");
-        _Expression();
-        _ReadToken("do");
-        _Statement();
+    else if (IsToken("while")) {
+        ReadToken("while");
+        Expression();
+        ReadToken("do");
+        Statement();
     }
-    else if (_IsToken("repeat")) {
-        _ReadToken("repeat");
+    else if (IsToken("repeat")) {
+        ReadToken("repeat");
         do {
-            if (_IsToken(";")) {
-                _ReadToken(";");
+            if (IsToken(";")) {
+                ReadToken(";");
             }
-            _Statement();
-        } while (_IsToken(";"));
-        _ReadToken("until");
-        _Expression();
+            Statement();
+        } while (IsToken(";"));
+        ReadToken("until");
+        Expression();
 
     }
-    else if (_IsToken("for")) {
-        _ReadToken("for");
-        _ReadToken("(");
-        _ForStat();
-        _ReadToken(";");
-        _ForExp();
-        _ReadToken(";");
-        _ForStat();
-        _ReadToken(")");
-        _Statement();
+    else if (IsToken("for")) {
+        ReadToken("for");
+        ReadToken("(");
+        ForStat();
+        ReadToken(";");
+        ForExp();
+        ReadToken(";");
+        ForStat();
+        ReadToken(")");
+        Statement();
     }
-    else if (_IsToken("loop")) {
-        _ReadToken("loop");
+    else if (IsToken("loop")) {
+        ReadToken("loop");
         do {
-            _Statement();
-        } while (_IsToken(";"));
-        _ReadToken("pool");
+            Statement();
+        } while (IsToken(";"));
+        ReadToken("pool");
     }
-    else if (_IsToken("case")) {
-        _ReadToken("case");
-        _Expression();
-        _ReadToken("of");
-        _Caseclauses();
-        _OtherwiseClause();
-        _ReadToken("end");
+    else if (IsToken("case")) {
+        ReadToken("case");
+        Expression();
+        ReadToken("of");
+        Caseclauses();
+        OtherwiseClause();
+        ReadToken("end");
     }
-    else if (_IsToken("read")) {
-        _ReadToken("read");
-        _ReadToken("(");
+    else if (IsToken("read")) {
+        ReadToken("read");
+        ReadToken("(");
         do {
-            _Name();
-        } while (_IsToken(","));
-        _ReadToken(")");
+            Name();
+        } while (IsToken(","));
+        ReadToken(")");
     }
-    else if (_IsToken("return")) {
-        _ReadToken("return");
-        _Expression();
+    else if (IsToken("return")) {
+        ReadToken("return");
+        Expression();
     }
-    else if (_IsToken("begin")) {
-        _ReadToken("begin");
-        _Body();
+    else if (IsToken("begin")) {
+        ReadToken("begin");
+        Body();
     }
-    else if (_IsIdentifier()) {
-        _Assignment();
+    else if (IsIdentifier()) {
+        Assignment();
     }
 }
 
@@ -687,9 +687,9 @@ void Parser::_Statement() {
  * Grammar for StringNode
  * @return void
  */
-void Parser::_StringNode() {
-    _ReadWhitespace();
-    _ReadToken("\"");
+void Parser::StringNode() {
+    ReadWhitespace();
+    ReadToken("\"");
     do {
         fin->get(my_c);
     } while(!fin->eof() && my_c != '"');
@@ -699,9 +699,9 @@ void Parser::_StringNode() {
  * Grammar for SubProgs
  * @return void
  */
-void Parser::_SubProgs() {
-    while (_IsToken("function")) {
-        _Fcn();
+void Parser::SubProgs() {
+    while (IsToken("function")) {
+        Fcn();
     }
 }
 
@@ -709,20 +709,20 @@ void Parser::_SubProgs() {
  * Grammar for Term
  * @return void
  */
-void Parser::_Term() {
-    _Factor();
-    while (_IsToken("+") ||
-           _IsToken("-") ||
-           _IsToken("or")) {
+void Parser::Term() {
+    Factor();
+    while (IsToken("+") ||
+           IsToken("-") ||
+           IsToken("or")) {
 
-        if (_IsToken("+")) {
-            _ReadToken("+");
-        } else if (_IsToken("-")) {
-            _ReadToken("-");
-        } else if (_IsToken("or")) {
-            _ReadToken("or");
+        if (IsToken("+")) {
+            ReadToken("+");
+        } else if (IsToken("-")) {
+            ReadToken("-");
+        } else if (IsToken("or")) {
+            ReadToken("or");
         }
-        _Factor();
+        Factor();
     }
 }
 
@@ -730,24 +730,24 @@ void Parser::_Term() {
  * Grammar for Type
  * @return void
  */
-void Parser::_Type() {
-    _Name();
-    _ReadToken("=");
-    _LitList();
+void Parser::Type() {
+    Name();
+    ReadToken("=");
+    LitList();
 }
 
 /**
  * Grammar for Types
  * @return void
  */
-void Parser::_Types() {
-    if (_IsToken("type")) {
+void Parser::Types() {
+    if (IsToken("type")) {
         do {
-            _ReadToken("type");
-            _Type();
-            _ReadWhitespace();
+            ReadToken("type");
+            Type();
+            ReadWhitespace();
         } while (isIdentifierStart(my_c));
-        _ReadToken(";");
+        ReadToken(";");
     }
 }
 
@@ -755,18 +755,18 @@ void Parser::_Types() {
  * Grammar for Tiny
  * @return void
  */
-void Parser::_Tiny() {
-    _ReadComment();
-    _ReadToken("program");
-    _Name();
-    _ReadToken(":");
-    _Consts();
-    _Types();
-    _Dclns();
-    _SubProgs();
-    _Body();
-    _Name();
-    _ReadToken(".");
+void Parser::Tiny() {
+    ReadComment();
+    ReadToken("program");
+    Name();
+    ReadToken(":");
+    Consts();
+    Types();
+    Dclns();
+    SubProgs();
+    Body();
+    Name();
+    ReadToken(".");
 }
 
 Parser::~Parser() {

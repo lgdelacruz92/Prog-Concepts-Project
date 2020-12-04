@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
         return -1;
     }
     Parser p(&fin);
-    p._Tiny();
+    p.Tiny();
     fin.close();
     return 0;
 }

@@ -13,6 +13,7 @@ class Parser {
         virtual ~Parser();
         virtual void Assignment();
         virtual void Body();
+        virtual void BuildTree(string node, int num_pop);
         virtual void Caseclause();
         virtual void Caseclauses();
         virtual void CaseExpression();

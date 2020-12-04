@@ -44,6 +44,15 @@ void Parser::Body() {
 }
 
 /**
+ * Method for BuildTree
+ * @param string node
+ * @param int num_pop
+ * @return void
+ */
+void Parser::BuildTree(string node, int num_pop) {
+}
+
+/**
  * Gramnmar for Caseclause
  * @return void
  */
@@ -377,7 +386,6 @@ bool Parser::IsToken(string token) {
     }
     fin->seekg(original_pos-1);
     fin->get(my_c);
-
 
     return is_token;
 }

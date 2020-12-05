@@ -1,5 +1,5 @@
-subc: subc.cpp parser.o
-	g++ subc.cpp parser.o -o subc
+subc: subc.cpp parser.o ast.o
+	g++ subc.cpp parser.o ast.o -o subc
 
 parser_string_node_tests: ./tests/parser_string_node_tests.cpp parser.o
 	g++ --std=c++17 ./tests/parser_string_node_tests.cpp parser.o -o parser_string_node_tests
@@ -24,6 +24,9 @@ parser_body_tests: ./tests/parser_body_tests.cpp parser.o
 
 parser_identifer_tests: ./tests/parser_identifer_tests.cpp parser.o
 	g++ --std=c++11 ./tests/parser_identifer_tests.cpp parser.o -o parser_identifer_tests
+
+ast.o: ast.cpp
+	g++ -c ast.cpp -o ast.o
 
 parser.o: parser.cpp
 	g++ -c parser.cpp -o parser.o

@@ -33,3 +33,5 @@ tests/abc123.dSYM/Contents/Resources/DWARF/abc123
 parser_statement_tests
 parser_assignment_tests
 parser_string_node_tests
+ast.o
+ast

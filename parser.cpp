@@ -501,6 +501,7 @@ bool Parser::IsToken(string token) {
         }
         fin->get(my_c);
     }
+    fin->clear();
     fin->seekg(original_pos-1);
     fin->get(my_c);
 
@@ -662,7 +663,6 @@ void Parser::ReadIdentifier() {
             fin->get(my_c);
         }
         
-        cout << identifier << endl;
     } else {
         cout << "Invalid identifier at line " << line + 1 << endl;
         throw "";
@@ -892,6 +892,7 @@ void Parser::Tiny() {
     Body();
     Name();
     ReadToken(".");
+    BuildTree("program", 7);
 }
 
 Parser::~Parser() {

@@ -1,1 +1,222 @@
-{"tasks": [{"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "./tests/parser_string_node_tests.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "build parser_string_node_tests", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}, {"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "./tests/parser_subprogs_tests.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "build parser_subprogs_tests", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}, {"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "./tests/parser_expression_tests.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "build parser_expression_tests", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}, {"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "./tests/parser_expression_tests.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "build parser_expression_tests", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}, {"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "./tests/parser_assignment_tests.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "build parser_assignment_tests", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}, {"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "./tests/parser_statement_tests.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "build parser_statement_tests", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}, {"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "./tests/parser_body_tests.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "build parser_body_tests", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}, {"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "./tests/parser_identifier_tests.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "build parser_identifier_tests", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}, {"problemMatcher": ["$gcc"], "group": {"kind": "build", "isDefault": true}, "args": ["-std=c++17", "-stdlib=libc++", "-g", "subc.cpp", "parser.cpp", "-o", "${fileDirname}/${fileBasenameNoExtension}"], "label": "clang++ build active file", "command": "/usr/bin/clang++", "type": "shell", "options": {"cwd": "${workspaceFolder}"}}], "version": "2.0.0"}
+{
+    "tasks": [
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_string_node_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "build parser_string_node_tests",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_subprogs_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "build parser_subprogs_tests",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_expression_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "build parser_expression_tests",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_expression_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "build parser_expression_tests",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_assignment_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "build parser_assignment_tests",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_statement_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "build parser_statement_tests",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_body_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "build parser_body_tests",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "./tests/parser_identifier_tests.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "build parser_identifier_tests",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "-std=c++17",
+                "-stdlib=libc++",
+                "-g",
+                "subc.cpp",
+                "ast.cpp",
+                "parser.cpp",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "label": "clang++ build active file",
+            "command": "/usr/bin/clang++",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        }
+    ],
+    "version": "2.0.0"
+}

@@ -62,6 +62,5 @@ class Parser {
         stack<AST*> ast_stack;
         char my_c;
         int line;
-        set<string> tokens;
 };
         

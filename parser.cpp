@@ -2,122 +2,38 @@
 #include "parser.h"
 #include "utils.h"
 
+
+
+void printAST2(AST* ast, int n) {
+    for (int i = 0; i < n; i++) {
+        cout << ". ";
+    }
+    cout << ast->value << endl;
+    if (ast->left) {
+        printAST2(ast->left, n+1);
+    }
+    if (ast->right) {
+        printAST2(ast->right, n);
+    }
+}
+
+void debugPrint(stack<AST*> ast_stack) {
+    while(ast_stack.size() > 0) {
+        printAST2(ast_stack.top(), 0);
+        ast_stack.pop();
+    }
+}
+
 Parser::Parser() {
     fin = new ifstream();
     line = 0;
-    tokens.insert("\n");
-    tokens.insert("program");
-    tokens.insert("var");
-    tokens.insert("const");
-    tokens.insert("type");
-    tokens.insert("function");
-    tokens.insert("return");
-    tokens.insert("begin");
-    tokens.insert("end");
-    tokens.insert(":=:");
-    tokens.insert(":=");
-    tokens.insert("output");
-    tokens.insert("if");
-    tokens.insert("then");
-    tokens.insert("else");
-    tokens.insert("while");
-    tokens.insert("do");
-    tokens.insert("case");
-    tokens.insert("of");
-    tokens.insert("..");
-    tokens.insert("otherwise");
-    tokens.insert("repeat");
-    tokens.insert("for");
-    tokens.insert("until");
-    tokens.insert("loop");
-    tokens.insert("pool");
-    tokens.insert("exit");
-    tokens.insert("<=");
-    tokens.insert("<>");
-    tokens.insert("<");
-    tokens.insert(">=");
-    tokens.insert(">");
-    tokens.insert("=");
-    tokens.insert("mod");
-    tokens.insert("and");
-    tokens.insert("or");
-    tokens.insert("not");
-    tokens.insert("read");
-    tokens.insert("succ");
-    tokens.insert("pred");
-    tokens.insert("chr");
-    tokens.insert("ord");
-    tokens.insert("eof");
-    tokens.insert("{");
-    tokens.insert(":");
-    tokens.insert(";");
-    tokens.insert(".");
-    tokens.insert(",");
-    tokens.insert("(");
-    tokens.insert(")");
-    tokens.insert("+");
-    tokens.insert("-");
-    tokens.insert("*");
-    tokens.insert("/");
+
 }
 
 Parser::Parser(istream* _fin) {
     fin = _fin;
     line = 0;
-    tokens.insert("\n");
-    tokens.insert("program");
-    tokens.insert("var");
-    tokens.insert("const");
-    tokens.insert("type");
-    tokens.insert("function");
-    tokens.insert("return");
-    tokens.insert("begin");
-    tokens.insert("end");
-    tokens.insert(":=:");
-    tokens.insert(":=");
-    tokens.insert("output");
-    tokens.insert("if");
-    tokens.insert("then");
-    tokens.insert("else");
-    tokens.insert("while");
-    tokens.insert("do");
-    tokens.insert("case");
-    tokens.insert("of");
-    tokens.insert("..");
-    tokens.insert("otherwise");
-    tokens.insert("repeat");
-    tokens.insert("for");
-    tokens.insert("until");
-    tokens.insert("loop");
-    tokens.insert("pool");
-    tokens.insert("exit");
-    tokens.insert("<=");
-    tokens.insert("<>");
-    tokens.insert("<");
-    tokens.insert(">=");
-    tokens.insert(">");
-    tokens.insert("=");
-    tokens.insert("mod");
-    tokens.insert("and");
-    tokens.insert("or");
-    tokens.insert("not");
-    tokens.insert("read");
-    tokens.insert("succ");
-    tokens.insert("pred");
-    tokens.insert("chr");
-    tokens.insert("ord");
-    tokens.insert("eof");
-    tokens.insert("{");
-    tokens.insert(":");
-    tokens.insert(";");
-    tokens.insert(".");
-    tokens.insert(",");
-    tokens.insert("(");
-    tokens.insert(")");
-    tokens.insert("+");
-    tokens.insert("-");
-    tokens.insert("*");
-    tokens.insert("/");
+
 }
 
 /**
@@ -168,7 +84,7 @@ void Parser::BuildTree(string node, int num_pop) {
         c->right = p;
         p = c;
     }
-    AST* new_node = new AST(node, p, nullptr);
+    AST* new_node = new AST(node + "(" + to_string(num_pop) + ")", p, nullptr);
     ast_stack.push(new_node);
 }
 
@@ -219,11 +135,13 @@ void Parser::Const() {
  * @return void
  */
 void Parser::Consts() {
+    int n = 0;
     if (IsToken("const")) {
         ReadToken("const");
         Const();
-        BuildTree("const", 0);
+        n++;
     }
+    BuildTree("consts", n);
 }
 
 /**
@@ -272,6 +190,7 @@ bool Parser::Dcln() {
  */
 void Parser::Dclns() {
     int n = 0;
+    debugPrint(ast_stack);
     if (IsToken("var")) {
         ReadToken("var");
         do {

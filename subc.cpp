@@ -3,7 +3,6 @@
 #include "parser.h"
 #include "printAST.h"
 
-
 int main(int argc, char **argv) {
     ifstream fin;
     fin.open(argv[argc-1], ios::in);

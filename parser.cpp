@@ -142,13 +142,16 @@ void Parser::Assignment() {
  */
 void Parser::Body() {
     ReadToken("begin");
+    int n = 0;
     do {
         if (IsToken(";")) {
             ReadToken(";");
         }
         Statement();
+        n++;
     } while (IsToken(";"));
     ReadToken("end");
+    BuildTree("body", n);
 }
 
 /**
@@ -219,6 +222,7 @@ void Parser::Consts() {
     if (IsToken("const")) {
         ReadToken("const");
         Const();
+        BuildTree("const", 0);
     }
 }
 
@@ -267,12 +271,18 @@ bool Parser::Dcln() {
  * @return void
  */
 void Parser::Dclns() {
+    int n = 0;
     if (IsToken("var")) {
         ReadToken("var");
-        while (Dcln()) {
-            ReadToken(";");
-        }
+        do {
+            if (IsToken(";")) {
+                ReadToken(";");
+            }
+            Dcln();
+            n++;
+        } while (IsToken(";"));
     }
+    BuildTree("dclns", n);
 }
 
 /**
@@ -344,6 +354,7 @@ void Parser::Fcn() {
     Body();
     Name();
     ReadToken(";");
+    BuildTree("fcn", 8);
 }
 
 /**
@@ -515,17 +526,16 @@ bool Parser::IsToken(string token) {
 void Parser::LitList() {
     ReadToken("(");
     ReadWhitespace();
-    while (!IsToken(")")) {
-        Name();
-        ReadWhitespace();
-        if (IsToken(")")) {
-            break;
-        } else if (IsToken(",")) {
+    int n = 0; 
+    do {
+        if (IsToken(",")) {
             ReadToken(",");
         }
-        ReadWhitespace();
-    }
+        Name();
+        n++; 
+    } while(IsToken(","));
     ReadToken(")");
+    BuildTree("litlist", n);
 }
 
 /**
@@ -534,6 +544,7 @@ void Parser::LitList() {
  */
 void Parser::Name() {
     ReadIdentifier();
+    BuildTree("<identifier>", 1);
 }
 
 /**
@@ -663,6 +674,7 @@ void Parser::ReadIdentifier() {
             fin->get(my_c);
         }
         
+        BuildTree(identifier, 0);
     } else {
         cout << "Invalid identifier at line " << line + 1 << endl;
         throw "";
@@ -729,37 +741,46 @@ void Parser::Statement() {
     if (IsToken("output")) {
         ReadToken("output");
         ReadToken("(");
+        int n = 0;
         do {
             OutExp();
+            n++;
         } while(IsToken(","));
         ReadToken(")");
+        BuildTree("output", n);
     }
     else if (IsToken("if")) {
         ReadToken("if");
         Expression();
         ReadToken("then");
         Statement();
+        int n = 1;
         if (IsToken("else")) {
             Statement();
+            n++;
         }
+        BuildTree("if", n);
     }
     else if (IsToken("while")) {
         ReadToken("while");
         Expression();
         ReadToken("do");
         Statement();
+        BuildTree("while", 2);
     }
     else if (IsToken("repeat")) {
         ReadToken("repeat");
+        int n = 0;
         do {
             if (IsToken(";")) {
                 ReadToken(";");
             }
             Statement();
+            n++;
         } while (IsToken(";"));
         ReadToken("until");
         Expression();
-
+        BuildTree("repeat", n+1);
     }
     else if (IsToken("for")) {
         ReadToken("for");
@@ -771,13 +792,20 @@ void Parser::Statement() {
         ForStat();
         ReadToken(")");
         Statement();
+        BuildTree("for", 4);
     }
     else if (IsToken("loop")) {
         ReadToken("loop");
+        int n = 0;
         do {
+            if (IsToken(";")) {
+                ReadToken(";");
+            }
             Statement();
+            n++;
         } while (IsToken(";"));
         ReadToken("pool");
+        BuildTree("loop", n);
     }
     else if (IsToken("case")) {
         ReadToken("case");
@@ -786,25 +814,35 @@ void Parser::Statement() {
         Caseclauses();
         OtherwiseClause();
         ReadToken("end");
+        BuildTree("case", 3);
     }
     else if (IsToken("read")) {
         ReadToken("read");
         ReadToken("(");
+        int n = 0;
         do {
+            if (IsToken(",")) {
+                ReadToken(",");
+            }
             Name();
+            n++;
         } while (IsToken(","));
         ReadToken(")");
+        BuildTree("read", n);
     }
     else if (IsToken("return")) {
         ReadToken("return");
         Expression();
+        BuildTree("return", 1);
     }
     else if (IsToken("begin")) {
         ReadToken("begin");
         Body();
+        BuildTree("begin", 1);
     }
     else if (IsIdentifier()) {
         Assignment();
+        BuildTree("identifier", 1);
     }
 }
 
@@ -825,9 +863,12 @@ void Parser::StringNode() {
  * @return void
  */
 void Parser::SubProgs() {
+    int n = 0;
     while (IsToken("function")) {
         Fcn();
+        n++;
     }
+    BuildTree("subprogs", n);
 }
 
 /**
@@ -859,6 +900,7 @@ void Parser::Type() {
     Name();
     ReadToken("=");
     LitList();
+    BuildTree("type", 2);
 }
 
 /**
@@ -866,14 +908,17 @@ void Parser::Type() {
  * @return void
  */
 void Parser::Types() {
+    int n = 0;
     if (IsToken("type")) {
         do {
             ReadToken("type");
             Type();
+            n++;
             ReadWhitespace();
         } while (isIdentifierStart(my_c));
         ReadToken(";");
     }
+    BuildTree("types", n);
 }
 
 /**

@@ -9,15 +9,23 @@ void printAST(AST* ast, int n) {
         cout << ". ";
     }
     cout << ast->value << endl;
-    if (ast->right) {
-        while (ast->right != nullptr) {
-            ast = ast->right;
-            n++;
-        }
-        printAST(ast, n);
-    } else if (ast->left) {
+    if (ast->left) {
         printAST(ast->left, n+1);
     }
+    if (ast->right) {
+        printAST(ast->right, n);
+    }
+}
+
+void testPrintAST() {
+    AST root("a", nullptr, nullptr);
+    root.left = new AST("b", nullptr, nullptr);
+    root.left->right = new AST("c", nullptr, nullptr);
+    root.left->right->left = new AST("e", nullptr, nullptr);
+    root.left->right->left->right = new AST("f", nullptr, nullptr);
+    root.left->right->left->right->right = new AST("g", nullptr, nullptr);
+    root.left->right->right = new AST("d", nullptr, nullptr);
+    printAST(&root, 0);
 }
 
 int main(int argc, char **argv) {
@@ -32,5 +40,6 @@ int main(int argc, char **argv) {
     p.Tiny();
     printAST(p.ast_stack.top(), 0);
     fin.close();
+    // testPrintAST();
     return 0;
 }

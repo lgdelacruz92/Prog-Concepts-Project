@@ -693,6 +693,7 @@ void Parser::Params()
  */
 void Parser::Primary()
 {
+    ReadWhitespace();
     if (IsToken("-"))
     {
         ReadToken("-");
@@ -716,6 +717,12 @@ void Parser::Primary()
         ReadToken("eof");
         BuildTree("eof", 1);
     }
+    else if (IsToken("("))
+    {
+        ReadToken("(");
+        Expression();
+        ReadToken(")");
+    }
     else if (IsIdentifier())
     {
         Name();
@@ -723,8 +730,10 @@ void Parser::Primary()
         if (IsToken("("))
         {
             ReadToken("(");
-            do {
-                if (IsToken(",")) {
+            do
+            {
+                if (IsToken(","))
+                {
                     ReadToken(",");
                 }
                 Expression();
@@ -768,30 +777,32 @@ void Parser::ReadComment()
     // Keep reading charaters until the brackets count
     // goes to zero
     // '{' is +1, '}' is -1
-    int openBrackets = 0;
-    do
-    {
-        if (my_c == '\n')
-        {
-            line++;
-        }
-        fin->get(my_c);
-        if (my_c == '{')
-        {
-            openBrackets++;
-        }
-        else if (my_c == '}')
-        {
-            openBrackets--;
-        }
-        else if (isIdentifierCharacter(my_c) && openBrackets == 0)
-        {
-            return;
-        }
-    } while (openBrackets > 0);
-
-    // Move to next char
+    int original_position = fin->tellg();
     fin->get(my_c);
+    if (my_c == '{') {
+        stack<char> s;
+        s.push(my_c);
+        while (s.size() > 0) {
+            fin->get(my_c);
+            if (my_c == '}') {
+                while (s.size() > 0 && s.top() != '{') {
+                    s.pop();
+                }
+                s.pop();
+            }
+        }
+
+        // Move to next char
+        fin->get(my_c);
+    } else if (my_c == '#') {
+        while(my_c != '\n' || !fin->eof()) {
+            fin->get(my_c);
+        }
+    } else {
+        fin->clear();
+        fin->seekg(original_position-1);
+        fin->get(my_c);
+    }
 }
 
 /**
@@ -846,6 +857,7 @@ void Parser::ReadInteger()
 void Parser::ReadToken(string token)
 {
     // First skip all whitespace
+    ReadComment();
     ReadWhitespace();
 
     // If there is a single character that mismatch
@@ -1111,7 +1123,6 @@ void Parser::Types()
  */
 void Parser::Tiny()
 {
-    ReadComment();
     ReadToken("program");
     Name();
     ReadToken(":");

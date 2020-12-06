@@ -24,7 +24,7 @@ class Parser {
         virtual void Const();
         virtual void Consts();
         virtual void ConstValue();
-        virtual bool Dcln();
+        virtual void Dcln();
         virtual void Dclns();
         virtual void Expression();
         virtual void Factor();
@@ -37,6 +37,7 @@ class Parser {
         virtual bool IsIdentifier();
         virtual bool IsInteger();
         virtual bool IsPrimary();
+        virtual bool IsPredefinedToken();
         virtual bool IsTerm();
         virtual bool IsToken(string token);
         virtual void LitList();

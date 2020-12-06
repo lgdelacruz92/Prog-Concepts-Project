@@ -35,3 +35,4 @@ parser_assignment_tests
 parser_string_node_tests
 ast.o
 ast
+tiny_01_result.tree

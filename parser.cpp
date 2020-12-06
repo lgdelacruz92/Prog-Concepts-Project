@@ -731,16 +731,18 @@ void Parser::Primary()
                 n++;
             } while (IsToken(","));
             ReadToken(")");
+            BuildTree("call", n);
         }
-        BuildTree("call", n);
     }
     else if (IsInteger())
     {
         ReadInteger();
+        BuildTree("<integer>", 1);
     }
     else if (IsChar())
     {
         ReadChar();
+        BuildTree("<char>", 1);
     }
 }
 
@@ -834,7 +836,7 @@ void Parser::ReadInteger()
         val += my_c;
         fin->get(my_c);
     }
-    BuildTree("integer", 0);
+    BuildTree(val, 0);
 }
 
 /**
@@ -1007,12 +1009,10 @@ void Parser::Statement()
     {
         ReadToken("begin");
         Body();
-        BuildTree("begin", 1);
     }
     else if (IsIdentifier())
     {
         Assignment();
-        BuildTree("identifier", 1);
     }
 }
 

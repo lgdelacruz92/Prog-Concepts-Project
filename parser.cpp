@@ -32,12 +32,14 @@ Parser::Parser()
 {
     fin = new ifstream();
     line = 0;
+    fin->get(my_c);
 }
 
 Parser::Parser(istream *_fin)
 {
     fin = _fin;
     line = 0;
+    fin->get(my_c);
 }
 
 /**
@@ -108,12 +110,20 @@ void Parser::BuildTree(string node, int num_pop)
  */
 void Parser::Caseclause()
 {
+    int n = 0;
     do
     {
+        if (IsToken(","))
+        {
+            ReadToken(",");
+        }
         CaseExpression();
+        n++;
     } while (IsToken(","));
-    ReadToken(";");
+    ReadToken(":");
     Statement();
+    n++;
+    BuildTree("case_clause", n);
 }
 
 /**
@@ -125,7 +135,8 @@ void Parser::Caseclauses()
     do
     {
         Caseclause();
-    } while (IsToken(";"));
+        ReadToken(";");
+    } while (IsIdentifier() && !IsToken("end"));
 }
 
 /**
@@ -138,6 +149,7 @@ void Parser::CaseExpression()
     if (IsToken(".."))
     {
         ConstValue();
+        BuildTree("..", 2);
     }
 }
 
@@ -183,7 +195,7 @@ void Parser::ConstValue()
     }
     else if (IsIdentifier())
     {
-        ReadIdentifier();
+        Name();
     }
     else
     {
@@ -369,6 +381,8 @@ bool Parser::IsChar()
 {
     int original_position = fin->tellg();
     ReadWhitespace();
+    ReadComment();
+    ReadWhitespace();
     if (my_c == '\'')
     {
         fin->get(my_c);
@@ -418,6 +432,8 @@ bool Parser::IsIdentifier()
 {
     int original_position = fin->tellg();
     ReadWhitespace();
+    ReadComment();
+    ReadWhitespace();
 
     if (isIdentifierStart(my_c))
     {
@@ -447,6 +463,9 @@ bool Parser::IsIdentifier()
  */
 bool Parser::IsPrimary()
 {
+    ReadWhitespace();
+    ReadComment();
+    ReadWhitespace();
     return IsToken("-") ||
            IsToken("+") ||
            IsToken("not") ||
@@ -552,6 +571,8 @@ bool Parser::IsInteger()
 {
     int original_position = fin->tellg();
     ReadWhitespace();
+    ReadComment();
+    ReadWhitespace();
     string val = "";
     if (0 <= my_c - '0' && my_c - '0' <= 9)
     {
@@ -583,6 +604,8 @@ bool Parser::IsInteger()
 bool Parser::IsToken(string token)
 {
     int original_pos = fin->tellg();
+    ReadWhitespace();
+    ReadComment();
     ReadWhitespace();
     bool is_token = true;
     for (int i = 0; i < token.size(); i++)
@@ -643,10 +666,7 @@ void Parser::OtherwiseClause()
     {
         ReadToken("otherwise");
         Statement();
-    }
-    else
-    {
-        ReadToken(";");
+        BuildTree("otherwise", 1);
     }
 }
 
@@ -715,7 +735,7 @@ void Parser::Primary()
     else if (IsToken("eof"))
     {
         ReadToken("eof");
-        BuildTree("eof", 1);
+        BuildTree("eof", 0);
     }
     else if (IsToken("("))
     {
@@ -762,6 +782,9 @@ void Parser::Primary()
 void Parser::ReadChar()
 {
     ReadWhitespace();
+    ReadComment();
+    ReadWhitespace();
+
     ReadToken("\'");
     fin->get(my_c);
     ReadToken("\'");
@@ -778,14 +801,17 @@ void Parser::ReadComment()
     // goes to zero
     // '{' is +1, '}' is -1
     int original_position = fin->tellg();
-    fin->get(my_c);
-    if (my_c == '{') {
+    if (my_c == '{')
+    {
         stack<char> s;
         s.push(my_c);
-        while (s.size() > 0) {
+        while (s.size() > 0)
+        {
             fin->get(my_c);
-            if (my_c == '}') {
-                while (s.size() > 0 && s.top() != '{') {
+            if (my_c == '}')
+            {
+                while (s.size() > 0 && s.top() != '{')
+                {
                     s.pop();
                 }
                 s.pop();
@@ -794,13 +820,18 @@ void Parser::ReadComment()
 
         // Move to next char
         fin->get(my_c);
-    } else if (my_c == '#') {
-        while(my_c != '\n' || !fin->eof()) {
+    }
+    else if (my_c == '#')
+    {
+        while (my_c != '\n' && !fin->eof())
+        {
             fin->get(my_c);
         }
-    } else {
+    }
+    else
+    {
         fin->clear();
-        fin->seekg(original_position-1);
+        fin->seekg(original_position - 1);
         fin->get(my_c);
     }
 }
@@ -812,6 +843,8 @@ void Parser::ReadComment()
 void Parser::ReadIdentifier()
 {
     // First skip through all whitespace
+    ReadWhitespace();
+    ReadComment();
     ReadWhitespace();
 
     // Is it a valid identifier start char
@@ -841,6 +874,9 @@ void Parser::ReadIdentifier()
 void Parser::ReadInteger()
 {
     ReadWhitespace();
+    ReadComment();
+    ReadWhitespace();
+
     string val = "";
     while (!fin->eof() && 0 <= my_c - '0' && my_c - '0' <= 9)
     {
@@ -857,6 +893,7 @@ void Parser::ReadInteger()
 void Parser::ReadToken(string token)
 {
     // First skip all whitespace
+    ReadWhitespace();
     ReadComment();
     ReadWhitespace();
 
@@ -925,6 +962,7 @@ void Parser::Statement()
         int n = 2;
         if (IsToken("else"))
         {
+            ReadToken("else");
             Statement();
             n++;
         }

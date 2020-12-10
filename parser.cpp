@@ -134,9 +134,14 @@ void Parser::Caseclauses()
 {
     do
     {
+        if (IsToken(";")) {
+            ReadToken(";");
+        }
+        if (IsToken("end")) {
+            break;
+        }
         Caseclause();
-        ReadToken(";");
-    } while (IsIdentifier() && !IsToken("end"));
+    } while (IsToken(";"));
 }
 
 /**
@@ -745,6 +750,9 @@ void Parser::Primary()
     }
     else if (IsIdentifier())
     {
+        if (IsToken("TooBig")) {
+            cout << "Test" << endl;
+        }
         Name();
         int n = 1;
         if (IsToken("("))
@@ -1057,7 +1065,6 @@ void Parser::Statement()
     }
     else if (IsToken("begin"))
     {
-        ReadToken("begin");
         Body();
     }
     else if (IsIdentifier())

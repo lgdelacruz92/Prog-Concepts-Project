@@ -1067,7 +1067,7 @@ void Parser::Statement()
     {
         Body();
     }
-    else if (IsIdentifier())
+    else if (IsIdentifier() && !IsToken("end"))
     {
         Assignment();
     }

@@ -991,6 +991,9 @@ void Parser::Statement()
         int n = 0;
         do
         {
+            if (IsToken(",")) {
+                ReadToken(",");
+            }
             OutExp();
             n++;
         } while (IsToken(","));

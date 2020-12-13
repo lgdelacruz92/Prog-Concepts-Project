@@ -135,14 +135,19 @@ int Parser::Caseclauses()
     int n = 0;
     do
     {
-        if (IsToken(";")) {
+        if (IsToken(";"))
+        {
             ReadToken(";");
         }
-        if (IsToken("end")) {
+        if (IsToken("end") || IsToken("otherwise"))
+        {
             break;
         }
         Caseclause();
         n++;
+        if (n == 9) {
+            int t = 2;
+        }
     } while (IsToken(";"));
     return n;
 }
@@ -156,7 +161,8 @@ void Parser::CaseExpression()
     ConstValue();
     if (IsToken(".."))
     {
-        ConstValue();
+        ReadToken("..");
+        CaseExpression();
         BuildTree("..", 2);
     }
 }
@@ -203,14 +209,9 @@ void Parser::ConstValue()
         ReadChar();
         BuildTree("<char>", 1);
     }
-    else if (IsIdentifier())
-    {
-        Name();
-    }
     else
     {
-        string message = "Nont a valid ConstValue on " + to_string(line);
-        throw message;
+        Name();
     }
 }
 
@@ -369,7 +370,8 @@ void Parser::ForStat()
     {
         Assignment();
     }
-    else {
+    else
+    {
         BuildTree("<null>", 1);
     }
 }
@@ -759,28 +761,32 @@ void Parser::Primary()
         Expression();
         ReadToken(")");
     }
-    else if (IsToken("succ")) {
+    else if (IsToken("succ"))
+    {
         ReadToken("succ");
         ReadToken("(");
         Expression();
         ReadToken(")");
         BuildTree("succ", 1);
     }
-    else if (IsToken("pred")) {
+    else if (IsToken("pred"))
+    {
         ReadToken("pred");
         ReadToken("(");
         Expression();
         ReadToken(")");
         BuildTree("pred", 1);
     }
-    else if (IsToken("chr")) {
+    else if (IsToken("chr"))
+    {
         ReadToken("chr");
         ReadToken("(");
         Expression();
         ReadToken(")");
         BuildTree("char", 1);
     }
-    else if (IsToken("ord")) {
+    else if (IsToken("ord"))
+    {
         ReadToken("ord");
         ReadToken("(");
         Expression();
@@ -991,7 +997,8 @@ void Parser::Statement()
         int n = 0;
         do
         {
-            if (IsToken(",")) {
+            if (IsToken(","))
+            {
                 ReadToken(",");
             }
             OutExp();
@@ -1109,7 +1116,9 @@ void Parser::Statement()
     else if (IsIdentifier() && !IsToken("end"))
     {
         Assignment();
-    } else {
+    }
+    else
+    {
         BuildTree("<null>", 0);
     }
 }
@@ -1139,7 +1148,8 @@ void Parser::SubProgs()
     {
         Fcn();
         n++;
-        if (n == 6) {
+        if (n == 6)
+        {
             int b = 2;
         }
     }
@@ -1153,13 +1163,19 @@ void Parser::SubProgs()
 void Parser::Term()
 {
     Factor();
-    while (IsToken("+") || IsToken("-") || IsToken("or")) {
+    while (IsToken("+") || IsToken("-") || IsToken("or"))
+    {
         string token;
-        if (IsToken("+")) {
+        if (IsToken("+"))
+        {
             token = "+";
-        } else if (IsToken("-")) {
+        }
+        else if (IsToken("-"))
+        {
             token = "-";
-        } else {
+        }
+        else
+        {
             token = "or";
         }
         ReadToken(token);
@@ -1192,10 +1208,12 @@ void Parser::Types()
         ReadToken("type");
         do
         {
-            if (IsToken(";")) {
+            if (IsToken(";"))
+            {
                 ReadToken(";");
             }
-            if (IsToken("var") || IsToken("function") || IsToken("begin")) {
+            if (IsToken("var") || IsToken("function") || IsToken("begin"))
+            {
                 break;
             }
             Type();

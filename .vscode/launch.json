@@ -180,5 +180,21 @@
             "type": "cppdbg",
             "MIMode": "lldb"
         }, 
+
+        {
+            "args": [
+                "tiny_test_progs/tiny_11"
+            ],
+            "name": "tiny_11",
+            "externalConsole": false,
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "stopAtEntry": true,
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "clang++ build active file",
+            "type": "cppdbg",
+            "MIMode": "lldb"
+        },
     ]
 }

@@ -1191,14 +1191,18 @@ void Parser::Types()
     int n = 0;
     if (IsToken("type"))
     {
+        ReadToken("type");
         do
         {
-            ReadToken("type");
+            if (IsToken(";")) {
+                ReadToken(";");
+            }
+            if (IsToken("var") || IsToken("function") || IsToken("begin")) {
+                break;
+            }
             Type();
             n++;
-            ReadWhitespace();
-        } while (isIdentifierStart(my_c));
-        ReadToken(";");
+        } while (IsToken(";"));
     }
     BuildTree("types", n);
 }

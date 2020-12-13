@@ -746,7 +746,7 @@ void Parser::Primary()
     {
         ReadToken("not");
         Primary();
-        BuildTree("note", 1);
+        BuildTree("not", 1);
     }
     else if (IsToken("eof"))
     {

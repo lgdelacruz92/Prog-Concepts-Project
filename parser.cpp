@@ -750,9 +750,6 @@ void Parser::Primary()
     }
     else if (IsIdentifier())
     {
-        if (IsToken("TooBig")) {
-            cout << "Test" << endl;
-        }
         Name();
         int n = 1;
         if (IsToken("("))

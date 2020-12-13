@@ -77,9 +77,6 @@ void Parser::Body()
         {
             ReadToken(";");
         }
-        if (IsToken("end")) {
-            break;
-        }
         Statement();
         n++;
     } while (IsToken(";"));
@@ -1082,7 +1079,7 @@ void Parser::Statement()
     {
         Assignment();
     } else {
-        BuildTree("<null>", 1);
+        BuildTree("<null>", 0);
     }
 }
 

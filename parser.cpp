@@ -267,37 +267,37 @@ void Parser::Expression()
     if (IsToken("<="))
     {
         ReadToken("<=");
-        Term();
+        Expression();
         BuildTree("<=", 2);
     }
     else if (IsToken("<"))
     {
         ReadToken("<");
-        Term();
+        Expression();
         BuildTree("<", 2);
     }
     else if (IsToken(">="))
     {
         ReadToken(">=");
-        Term();
+        Expression();
         BuildTree(">=", 2);
     }
     else if (IsToken(">"))
     {
         ReadToken(">");
-        Term();
+        Expression();
         BuildTree(">", 2);
     }
     else if (IsToken("="))
     {
         ReadToken("=");
-        Term();
+        Expression();
         BuildTree("=", 2);
     }
     else if (IsToken("<>"))
     {
         ReadToken("<>");
-        Term();
+        Expression();
         BuildTree("<>", 2);
     }
 }
@@ -1139,6 +1139,9 @@ void Parser::SubProgs()
     {
         Fcn();
         n++;
+        if (n == 6) {
+            int b = 2;
+        }
     }
     BuildTree("subprogs", n);
 }
@@ -1150,23 +1153,18 @@ void Parser::SubProgs()
 void Parser::Term()
 {
     Factor();
-    if (IsToken("+"))
-    {
-        ReadToken("+");
+    while (IsToken("+") || IsToken("-") || IsToken("or")) {
+        string token;
+        if (IsToken("+")) {
+            token = "+";
+        } else if (IsToken("-")) {
+            token = "-";
+        } else {
+            token = "or";
+        }
+        ReadToken(token);
         Factor();
-        BuildTree("+", 2);
-    }
-    else if (IsToken("-"))
-    {
-        ReadToken("-");
-        Factor();
-        BuildTree("-", 2);
-    }
-    else if (IsToken("or"))
-    {
-        ReadToken("or");
-        Factor();
-        BuildTree("or", 2);
+        BuildTree(token, 2);
     }
 }
 

@@ -40,3 +40,4 @@ tiny_01_result.tree
 run_test
 */*.tree
 tests/diff/
+Makefile.dSYM/Contents/Resources/DWARF/Makefile

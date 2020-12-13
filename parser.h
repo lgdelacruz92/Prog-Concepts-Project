@@ -19,7 +19,7 @@ class Parser {
         virtual void Body();
         virtual void BuildTree(string node, int num_pop);
         virtual void Caseclause();
-        virtual void Caseclauses();
+        virtual int Caseclauses();
         virtual void CaseExpression();
         virtual void Const();
         virtual void Consts();
@@ -43,7 +43,7 @@ class Parser {
         virtual void LitList();
         virtual void Name();
         virtual void OutExp();
-        virtual void OtherwiseClause();
+        virtual int OtherwiseClause();
         virtual void Params();
         virtual void Primary();
         virtual void ReadChar();

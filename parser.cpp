@@ -77,6 +77,9 @@ void Parser::Body()
         {
             ReadToken(";");
         }
+        if (IsToken("end")) {
+            break;
+        }
         Statement();
         n++;
     } while (IsToken(";"));
@@ -130,8 +133,9 @@ void Parser::Caseclause()
  * Grammar for Caseclauses
  * @return void
  */
-void Parser::Caseclauses()
+int Parser::Caseclauses()
 {
+    int n = 0;
     do
     {
         if (IsToken(";")) {
@@ -141,7 +145,9 @@ void Parser::Caseclauses()
             break;
         }
         Caseclause();
+        n++;
     } while (IsToken(";"));
+    return n;
 }
 
 /**
@@ -193,10 +199,12 @@ void Parser::ConstValue()
     if (IsInteger())
     {
         ReadInteger();
+        BuildTree("<integer>", 1);
     }
     else if (IsChar())
     {
         ReadChar();
+        BuildTree("<char>", 1);
     }
     else if (IsIdentifier())
     {
@@ -363,6 +371,9 @@ void Parser::ForStat()
     if (IsIdentifier())
     {
         Assignment();
+    }
+    else {
+        BuildTree("<null>", 1);
     }
 }
 
@@ -648,7 +659,7 @@ void Parser::LitList()
         n++;
     } while (IsToken(","));
     ReadToken(")");
-    BuildTree("litlist", n);
+    BuildTree("lit", n);
 }
 
 /**
@@ -665,14 +676,17 @@ void Parser::Name()
  * Grammar for OtherwiseClause
  * @return void
  */
-void Parser::OtherwiseClause()
+int Parser::OtherwiseClause()
 {
+    int n = 0;
     if (IsToken("otherwise"))
     {
         ReadToken("otherwise");
         Statement();
         BuildTree("otherwise", 1);
+        n++;
     }
+    return n;
 }
 
 /**
@@ -1032,10 +1046,10 @@ void Parser::Statement()
         ReadToken("case");
         Expression();
         ReadToken("of");
-        Caseclauses();
-        OtherwiseClause();
+        int n = Caseclauses();
+        int n2 = OtherwiseClause();
         ReadToken("end");
-        BuildTree("case", 3);
+        BuildTree("case", n + n2 + 1);
     }
     else if (IsToken("read"))
     {
@@ -1067,6 +1081,8 @@ void Parser::Statement()
     else if (IsIdentifier() && !IsToken("end"))
     {
         Assignment();
+    } else {
+        BuildTree("<null>", 1);
     }
 }
 

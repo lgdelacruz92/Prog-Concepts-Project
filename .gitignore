@@ -36,3 +36,7 @@ parser_string_node_tests
 ast.o
 ast
 tiny_01_result.tree
+*.tree
+run_test
+*/*.tree
+tests/diff/

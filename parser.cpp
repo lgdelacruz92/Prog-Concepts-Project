@@ -759,6 +759,34 @@ void Parser::Primary()
         Expression();
         ReadToken(")");
     }
+    else if (IsToken("succ")) {
+        ReadToken("succ");
+        ReadToken("(");
+        Expression();
+        ReadToken(")");
+        BuildTree("succ", 1);
+    }
+    else if (IsToken("pred")) {
+        ReadToken("pred");
+        ReadToken("(");
+        Expression();
+        ReadToken(")");
+        BuildTree("pred", 1);
+    }
+    else if (IsToken("chr")) {
+        ReadToken("chr");
+        ReadToken("(");
+        Expression();
+        ReadToken(")");
+        BuildTree("char", 1);
+    }
+    else if (IsToken("ord")) {
+        ReadToken("ord");
+        ReadToken("(");
+        Expression();
+        ReadToken(")");
+        BuildTree("ord", 1);
+    }
     else if (IsIdentifier())
     {
         Name();

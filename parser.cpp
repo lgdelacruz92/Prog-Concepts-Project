@@ -145,7 +145,8 @@ int Parser::Caseclauses()
         }
         Caseclause();
         n++;
-        if (n == 9) {
+        if (n == 9)
+        {
             int t = 2;
         }
     } while (IsToken(";"));
@@ -310,30 +311,33 @@ void Parser::Expression()
 void Parser::Factor()
 {
     Primary();
+    while (IsToken("*") ||
+           IsToken("/") ||
+           IsToken("and") ||
+           IsToken("mod"))
+    {
 
-    if (IsToken("*"))
-    {
-        ReadToken("*");
+        string token;
+        if (IsToken("*"))
+        {
+            token = "*";
+        }
+        else if (IsToken("/"))
+        {
+            token = "/";
+        }
+        else if (IsToken("and"))
+        {
+            token = "and";
+        }
+        else if (IsToken("mod"))
+        {
+            token = "mod";
+        }
+
+        ReadToken(token);
         Primary();
-        BuildTree("*", 2);
-    }
-    else if (IsToken("/"))
-    {
-        ReadToken("/");
-        Primary();
-        BuildTree("/", 2);
-    }
-    else if (IsToken("and"))
-    {
-        ReadToken("and");
-        Primary();
-        BuildTree("and", 2);
-    }
-    else if (IsToken("mod"))
-    {
-        ReadToken("mod");
-        Primary();
-        BuildTree("mod", 2);
+        BuildTree(token, 2);
     }
 }
 
@@ -835,10 +839,13 @@ void Parser::ReadChar()
     ReadComment();
     ReadWhitespace();
 
+    string s(1,my_c);
     ReadToken("\'");
+    s += string(1, my_c);
     fin->get(my_c);
+    s += string(1, my_c);
     ReadToken("\'");
-    BuildTree("char", 0);
+    BuildTree(s, 0);
 }
 
 /**

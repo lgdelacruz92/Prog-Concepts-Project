@@ -41,3 +41,5 @@ run_test
 */*.tree
 tests/diff/
 Makefile.dSYM/Contents/Resources/DWARF/Makefile
+tree.*
+*_diff

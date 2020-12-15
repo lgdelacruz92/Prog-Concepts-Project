@@ -6,6 +6,7 @@
         "iostream": "cpp",
         "string": "cpp",
         "istream": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "stack": "cpp"
     }
 }

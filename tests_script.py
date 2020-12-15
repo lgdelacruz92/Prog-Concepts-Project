@@ -16,7 +16,7 @@ if __name__ == "__main__":
     for i in range(1, 26):
         number_suffix = '0{number}'.format(number=i) if (i < 10) else '{number}'.format(number=i)
         tiny = 'tiny_{number_suffix}'.format(number_suffix=number_suffix)
-        os.system('./subc tiny_test_progs/{tiny} > tests/trees/{tiny}_result.tree 2>/dev/null'.format(tiny=tiny))
+        os.system('./subc -ast tiny_test_progs/{tiny} > tests/trees/{tiny}_result.tree 2>/dev/null'.format(tiny=tiny))
         os.system('diff tests/trees/{tiny}_result.tree tiny_test_progs/{tiny}.tree > tests/diff/{tiny}_diff'.format(tiny=tiny))
         if is_empty('tests/diff/{tiny}_diff'.format(tiny=tiny)):
             print(TEXT_COLOR_GREEN + '{tiny} success!'.format(tiny=tiny) + TEXT_COLOR_END)
